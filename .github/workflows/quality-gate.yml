@@ -25,3 +25,7 @@ jobs:
       - name: Godot Quality Gate
         shell: pwsh
         run: ./engines/Godot/scripts/quality-gate.ps1
+
+      - name: Defold Quality Gate
+        shell: pwsh
+        run: ./engines/defold/scripts/quality-gate.ps1

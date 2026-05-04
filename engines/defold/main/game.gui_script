@@ -1,0 +1,322 @@
+-- Pulse Grid — Defold GUI script (game.gui_script)
+-- A 4x4 reaction game: click cells when they pulse before the window closes.
+-- Demonstrates: Defold GUI system, gui.animate easing, gui.pick_node input,
+-- sys.save/load persistence, and idiomatic Lua closure patterns.
+
+-- ---------------------------------------------------------------------------
+-- Constants
+-- ---------------------------------------------------------------------------
+local GRID_SIZE              = 4
+local CELL_COUNT             = GRID_SIZE * GRID_SIZE   -- 16
+
+local STARTING_LIVES         = 3
+local ROUND_DURATION         = 60.0    -- seconds per round
+
+local BASE_PULSE_INTERVAL    = 2.0     -- seconds between spawns
+local MIN_PULSE_INTERVAL     = 0.35
+local PULSE_INTERVAL_STEP    = 0.09    -- reduction per level
+
+local BASE_ACTIVE_WINDOW     = 1.8     -- how long a cell stays lit
+local MIN_ACTIVE_WINDOW      = 0.45
+local ACTIVE_WINDOW_STEP     = 0.06    -- reduction per level
+
+local COMBO_WINDOW           = 2.4     -- seconds to maintain combo
+local LEVEL_THRESHOLD        = 8       -- score points per level
+local MAX_LEVEL              = 10
+
+local SAVE_APP               = "pulsegrid"
+local SAVE_FILE              = "save.json"
+
+-- ---------------------------------------------------------------------------
+-- Colours (vmath.vector4 RGBA in 0–1 range)
+-- ---------------------------------------------------------------------------
+local C_IDLE    = vmath.vector4(0.18, 0.18, 0.22, 1)
+local C_ACTIVE  = vmath.vector4(0.20, 0.90, 0.60, 1)
+local C_HIT     = vmath.vector4(1.00, 1.00, 1.00, 1)
+local C_MISS    = vmath.vector4(0.90, 0.20, 0.20, 1)
+
+-- ---------------------------------------------------------------------------
+-- State enum
+-- ---------------------------------------------------------------------------
+local STATE = { TITLE = 1, PLAYING = 2, PAUSED = 3, GAME_OVER = 4 }
+
+-- ---------------------------------------------------------------------------
+-- Module-level game state (reset each round)
+-- ---------------------------------------------------------------------------
+local state
+local score
+local best_score
+local lives
+local level
+local combo
+local combo_timer
+local round_timer
+local pulse_interval
+local active_window
+local active_cells   -- map: cell_index (0-15) → remaining window time
+local pulse_timer
+
+-- ---------------------------------------------------------------------------
+-- Helpers
+-- ---------------------------------------------------------------------------
+local function cell_node(idx)
+  return gui.get_node("cell_" .. idx)
+end
+
+-- ---------------------------------------------------------------------------
+-- Persistence
+-- ---------------------------------------------------------------------------
+local function load_best()
+  local path = sys.get_save_file(SAVE_APP, SAVE_FILE)
+  local data = sys.load(path)
+  best_score = (data and data.best) and data.best or 0
+end
+
+local function save_best()
+  local path = sys.get_save_file(SAVE_APP, SAVE_FILE)
+  sys.save(path, { best = best_score })
+end
+
+-- ---------------------------------------------------------------------------
+-- HUD refresh
+-- ---------------------------------------------------------------------------
+local function update_hud()
+  gui.set_text(gui.get_node("timer_label"), "Time: " .. math.floor(round_timer))
+  gui.set_text(gui.get_node("score_label"), "Score: " .. score)
+  gui.set_text(gui.get_node("best_label"),  "Best: "  .. best_score)
+  gui.set_text(gui.get_node("lives_label"), "Lives: " .. lives)
+  gui.set_text(gui.get_node("level_label"), "Level: " .. level)
+  if combo > 1 then
+    gui.set_text(gui.get_node("combo_label"), "Combo x" .. combo)
+  else
+    gui.set_text(gui.get_node("combo_label"), "")
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Cell management
+-- ---------------------------------------------------------------------------
+local function reset_all_cells()
+  active_cells = {}
+  for i = 0, CELL_COUNT - 1 do
+    gui.cancel_animation(cell_node(i), gui.PROP_COLOR)
+    gui.set_color(cell_node(i), C_IDLE)
+  end
+end
+
+local function activate_cell(idx)
+  if active_cells[idx] then return end
+  active_cells[idx] = active_window
+  -- Pulsing glow: animate from idle → active colour
+  gui.animate(cell_node(idx), gui.PROP_COLOR, C_ACTIVE,
+    gui.EASING_OUTQUAD, 0.12, 0)
+end
+
+local function deactivate_cell(idx)
+  active_cells[idx] = nil
+  gui.cancel_animation(cell_node(idx), gui.PROP_COLOR)
+  gui.set_color(cell_node(idx), C_IDLE)
+end
+
+local function pick_inactive_cell()
+  local pool = {}
+  for i = 0, CELL_COUNT - 1 do
+    if not active_cells[i] then pool[#pool + 1] = i end
+  end
+  if #pool == 0 then return nil end
+  return pool[math.random(#pool)]
+end
+
+-- ---------------------------------------------------------------------------
+-- Difficulty scaling
+-- ---------------------------------------------------------------------------
+local function recalculate_difficulty()
+  local new_level = math.min(math.floor(score / LEVEL_THRESHOLD) + 1, MAX_LEVEL)
+  if new_level ~= level then
+    level = new_level
+    local step = level - 1
+    pulse_interval = math.max(BASE_PULSE_INTERVAL - step * PULSE_INTERVAL_STEP,
+                              MIN_PULSE_INTERVAL)
+    active_window  = math.max(BASE_ACTIVE_WINDOW  - step * ACTIVE_WINDOW_STEP,
+                              MIN_ACTIVE_WINDOW)
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Scoring events
+-- ---------------------------------------------------------------------------
+local function on_hit(idx)
+  deactivate_cell(idx)
+  combo        = combo + 1
+  combo_timer  = COMBO_WINDOW
+  -- Combo multiplier: 1pt base, +1pt every 3 consecutive hits (cap 4×)
+  local pts = 1 + math.min(math.floor(combo / 3), 3)
+  score = score + pts
+  if score > best_score then best_score = score end
+  recalculate_difficulty()
+
+  -- Flash white → idle
+  gui.set_color(cell_node(idx), C_HIT)
+  gui.animate(cell_node(idx), gui.PROP_COLOR, C_IDLE,
+    gui.EASING_OUTQUAD, 0.22, 0.03)
+
+  update_hud()
+end
+
+local function on_miss(idx)
+  active_cells[idx] = nil
+  -- Flash red → idle
+  gui.cancel_animation(cell_node(idx), gui.PROP_COLOR)
+  gui.set_color(cell_node(idx), C_MISS)
+  gui.animate(cell_node(idx), gui.PROP_COLOR, C_IDLE,
+    gui.EASING_OUTQUAD, 0.40, 0)
+
+  combo       = 0
+  combo_timer = 0
+  lives       = lives - 1
+  update_hud()
+
+  if lives <= 0 then
+    state = STATE.GAME_OVER
+    save_best()
+    gui.set_text(gui.get_node("state_label"),
+      "GAME OVER\nScore: " .. score .. "   Best: " .. best_score
+      .. "\nEnter = restart   Esc = quit")
+    gui.set_enabled(gui.get_node("overlay"), true)
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Round lifecycle
+-- ---------------------------------------------------------------------------
+local function show_overlay(text)
+  gui.set_text(gui.get_node("state_label"), text)
+  gui.set_enabled(gui.get_node("overlay"), true)
+end
+
+local function start_round()
+  score         = 0
+  lives         = STARTING_LIVES
+  level         = 1
+  combo         = 0
+  combo_timer   = 0
+  round_timer   = ROUND_DURATION
+  pulse_interval = BASE_PULSE_INTERVAL
+  active_window  = BASE_ACTIVE_WINDOW
+  pulse_timer    = pulse_interval
+  reset_all_cells()
+  state = STATE.PLAYING
+  gui.set_enabled(gui.get_node("overlay"), false)
+  update_hud()
+end
+
+-- ---------------------------------------------------------------------------
+-- Defold lifecycle callbacks
+-- ---------------------------------------------------------------------------
+function init(self)
+  math.randomseed(os.time())
+  msg.post(".", "acquire_input_focus")
+  load_best()
+  score       = 0
+  lives       = STARTING_LIVES
+  level       = 1
+  combo       = 0
+  combo_timer = 0
+  round_timer = ROUND_DURATION
+  reset_all_cells()
+  update_hud()
+  show_overlay("PULSE GRID\nClick each cell before it fades!\nPress Enter to start")
+  state = STATE.TITLE
+end
+
+function update(self, dt)
+  if state ~= STATE.PLAYING then return end
+
+  -- Round countdown
+  round_timer = round_timer - dt
+  if round_timer <= 0 then
+    round_timer = 0
+    state = STATE.GAME_OVER
+    save_best()
+    show_overlay("TIME UP!\nScore: " .. score .. "   Best: " .. best_score
+      .. "\nEnter = restart")
+    update_hud()
+    return
+  end
+
+  -- Combo decay
+  if combo > 0 then
+    combo_timer = combo_timer - dt
+    if combo_timer <= 0 then
+      combo       = 0
+      combo_timer = 0
+      update_hud()
+    end
+  end
+
+  -- Spawn pulse
+  pulse_timer = pulse_timer - dt
+  if pulse_timer <= 0 then
+    pulse_timer = pulse_interval
+    local idx = pick_inactive_cell()
+    if idx then activate_cell(idx) end
+  end
+
+  -- Expire active cells
+  local expired = {}
+  for idx, remaining in pairs(active_cells) do
+    active_cells[idx] = remaining - dt
+    if active_cells[idx] <= 0 then
+      expired[#expired + 1] = idx
+    end
+  end
+  for _, idx in ipairs(expired) do
+    on_miss(idx)
+    if state ~= STATE.PLAYING then return end
+  end
+
+  update_hud()
+end
+
+function on_input(self, action_id, action)
+  -- Keyboard: Enter = start/restart, Escape = pause/resume
+  if action_id == hash("key_return") and action.pressed then
+    if state == STATE.TITLE or state == STATE.GAME_OVER then
+      start_round()
+      return true
+    end
+  end
+
+  if action_id == hash("key_escape") and action.pressed then
+    if state == STATE.PLAYING then
+      state = STATE.PAUSED
+      show_overlay("PAUSED\nPress Esc to resume")
+      return true
+    elseif state == STATE.PAUSED then
+      state = STATE.PLAYING
+      gui.set_enabled(gui.get_node("overlay"), false)
+      return true
+    end
+  end
+
+  -- Mouse left-click or touch: check each active cell
+  local is_click = (action_id == hash("mouse_button_left")
+                    or action_id == hash("touch"))
+  if is_click and action.pressed and state == STATE.PLAYING then
+    for idx, _ in pairs(active_cells) do
+      if gui.pick_node(cell_node(idx), action.x, action.y) then
+        on_hit(idx)
+        return true
+      end
+    end
+  end
+
+  return false
+end
+
+function on_message(self, message_id, message, sender)
+  -- External restart request (e.g. from a hypothetical menu collection proxy)
+  if message_id == hash("restart") then
+    start_round()
+  end
+end

@@ -1,0 +1,19 @@
+[project]
+title = Pulse Grid
+version = 0.1.0
+write_log = 0
+
+[display]
+width = 960
+height = 640
+variable_dt = 0
+
+[bootstrap]
+main_collection = /main/main.collection
+
+[physics]
+type = 2D
+gravity_y = -10
+
+[input]
+game_binding = /input/game.input_binding

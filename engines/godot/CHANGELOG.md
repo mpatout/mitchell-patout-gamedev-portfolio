@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## [0.3.1] - 2026-05-04
+
+### Added
+
+- Acceptance test suite for pre-release validation.
+- Godot quality gate checks for project config and scene/script linkage.
+
+### Changed
+
+- Locked tested Godot feature version to 4.2.2.
+- Updated README with tested-version policy and acceptance-test reference.
+- Updated competency matrix with concrete Godot evidence mapping.
+
 ## [0.3.0] - 2026-05-04
 
 ### Added

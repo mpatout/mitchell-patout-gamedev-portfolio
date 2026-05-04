@@ -14,7 +14,7 @@ Last updated: 2026-05-04
 
 | Engine | Status | Notes |
 | --- | --- | --- |
-| Godot | Advanced vertical slice complete | Core systems, release packaging, and quality gate in place |
+| Godot | Production hardening in progress | Core systems and quality gates in place; profiler capture and public GitHub release still pending |
 | Defold | Pending | Next implementation target |
 | Solar2D | Pending | Planned after Defold baseline |
 | Panda3D | Pending | Planned after Solar2D baseline |
@@ -22,6 +22,6 @@ Last updated: 2026-05-04
 
 ## Current Readiness Summary
 
-- Godot is close to release-ready for source distribution.
-- Remaining work for Godot is mainly playtesting, balancing, and export preset setup for platform binaries.
-- Portfolio repository is not published to GitHub yet.
+- Godot has production gameplay systems, release packaging, and acceptance test definitions.
+- Final blockers: profiler data capture on a machine with Godot installed, release publishing to public GitHub repository.
+- Portfolio repository has local git history but is not pushed to GitHub yet.

@@ -18,6 +18,13 @@ This document defines how to capture and evaluate baseline performance for Signa
 - Frame-time spikes: less than 5 ms variance during normal movement
 - No sustained script-time growth over a full 60-second round
 
+## Capture Log
+
+| Date | Scenario | Device/OS | Godot Version | FPS Range | Largest Spike | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Pending | Level 1 low pressure | Pending | Pending | Pending | Pending | Capture not yet recorded |
+| Pending | Level 5+ high pressure | Pending | Pending | Pending | Pending | Capture not yet recorded |
+
 ## Reporting Format
 
 Record each capture with:
@@ -31,4 +38,8 @@ Record each capture with:
 
 ## First Capture Status
 
-Pending local engine run and profiler capture in Godot editor.
+Pending local Godot editor run.
+
+This workspace environment does not currently have `godot4` installed, so profiler metrics cannot
+be captured here. Run the capture procedure on a machine with Godot 4.2.2 installed and replace
+all `Pending` values in the Capture Log before submission.

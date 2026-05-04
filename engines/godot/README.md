@@ -10,7 +10,9 @@ and use stasis powerups to stabilize difficult phases.
 
 ### Required Version
 
-- Godot 4.2+
+- Minimum supported: Godot 4.2.2
+- Tested versions: Godot 4.2.2
+- Other 4.x versions may work but are not currently verified in this repository.
 
 ### Run in Editor
 
@@ -58,6 +60,10 @@ godot4 --path engines/godot
 ## Performance Snapshot
 
 See [PROFILING_BASELINE.md](PROFILING_BASELINE.md) for capture workflow and target thresholds.
+
+## Acceptance Testing
+
+Run and record pre-release checks in [ACCEPTANCE_TEST.md](ACCEPTANCE_TEST.md).
 
 ## Known Limitations
 

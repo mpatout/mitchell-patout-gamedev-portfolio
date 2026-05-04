@@ -4,7 +4,7 @@ This document defines how to capture and evaluate baseline performance for Signa
 
 ## Capture Procedure
 
-1. Open the Godot project from `engines/godot`.
+1. Open the Godot project from `engines/Godot`.
 2. Start the game and run for 3 full rounds.
 3. Enable Godot profiler and record:
 - Frame time spikes

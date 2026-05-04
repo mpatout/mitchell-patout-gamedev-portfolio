@@ -19,10 +19,10 @@ Use this runbook to produce a reproducible Godot release package.
 3. Run packaging script:
 
 ```powershell
-./engines/godot/scripts/package-release.ps1 -Version 0.3.0
+./engines/Godot/scripts/package-release.ps1 -Version 0.3.0
 ```
 
-4. Verify output in `engines/godot/releases/`.
+4. Verify output in `engines/Godot/releases/`.
 5. Publish artifact to GitHub Releases with matching tag.
 
 ## Preflight Checks
@@ -36,7 +36,7 @@ Use this runbook to produce a reproducible Godot release package.
 - Run Godot quality gate:
 
 ```powershell
-./engines/godot/scripts/quality-gate.ps1
+./engines/Godot/scripts/quality-gate.ps1
 ```
 
 ## GitHub Publish Flow

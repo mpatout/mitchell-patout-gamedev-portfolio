@@ -1,4 +1,4 @@
-﻿param()
+param()
 
 $ErrorActionPreference = "Stop"
 
@@ -14,7 +14,7 @@ $requiredRoot = @(
     ".github/ISSUE_TEMPLATE/bug_report.yml"
 )
 
-$engines = @("godot", "defold", "solar2d", "panda3d", "stride")
+$engines = @("Godot", "defold", "solar2d", "panda3d", "stride")
 $requiredEngineFiles = @(
     "README.md",
     "PROJECT_SCOPE.md",

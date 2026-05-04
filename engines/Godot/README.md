@@ -1,4 +1,4 @@
-﻿# Signal Chase (Godot Flagship Vertical Slice)
+# Signal Chase (Godot Flagship Vertical Slice)
 
 ## Overview
 
@@ -17,7 +17,7 @@ and use stasis powerups to stabilize difficult phases.
 ### Run in Editor
 
 1. Open Godot.
-2. Import this folder: `engines/godot`.
+2. Import this folder: `engines/Godot`.
 3. Run the project (main scene is `res://scenes/Main.tscn`).
 
 ### Run from CLI
@@ -25,7 +25,7 @@ and use stasis powerups to stabilize difficult phases.
 From repository root:
 
 ```powershell
-godot4 --path engines/godot
+godot4 --path engines/Godot
 ```
 
 ## Controls
@@ -73,5 +73,5 @@ Run and record pre-release checks in [ACCEPTANCE_TEST.md](ACCEPTANCE_TEST.md).
 
 ## Release Operations
 
-- Packaging script: `engines/godot/scripts/package-release.ps1`
+- Packaging script: `engines/Godot/scripts/package-release.ps1`
 - Release process: [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md)

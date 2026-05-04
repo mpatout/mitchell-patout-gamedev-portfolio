@@ -1,4 +1,4 @@
-﻿name: Quality Gate
+name: Quality Gate
 
 on:
   pull_request:
@@ -24,4 +24,4 @@ jobs:
 
       - name: Godot Quality Gate
         shell: pwsh
-        run: ./engines/godot/scripts/quality-gate.ps1
+        run: ./engines/Godot/scripts/quality-gate.ps1

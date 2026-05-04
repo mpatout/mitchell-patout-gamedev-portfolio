@@ -29,16 +29,16 @@ if (Test-Path $stageDir) {
 New-Item -ItemType Directory -Path $stageDir | Out-Null
 
 $filesToCopy = @(
-    "engines/godot/project.godot",
-    "engines/godot/README.md",
-    "engines/godot/PROJECT_SCOPE.md",
-    "engines/godot/TECHNICAL_PACKET.md",
-    "engines/godot/PROFILING_BASELINE.md",
-    "engines/godot/RELEASE_RUNBOOK.md",
-    "engines/godot/CHANGELOG.md",
-    "engines/godot/ASSET_PROVENANCE.md",
-    "engines/godot/scenes/Main.tscn",
-    "engines/godot/scripts/main.gd"
+    "engines/Godot/project.godot",
+    "engines/Godot/README.md",
+    "engines/Godot/PROJECT_SCOPE.md",
+    "engines/Godot/TECHNICAL_PACKET.md",
+    "engines/Godot/PROFILING_BASELINE.md",
+    "engines/Godot/RELEASE_RUNBOOK.md",
+    "engines/Godot/CHANGELOG.md",
+    "engines/Godot/ASSET_PROVENANCE.md",
+    "engines/Godot/scenes/Main.tscn",
+    "engines/Godot/scripts/main.gd"
 )
 
 foreach ($path in $filesToCopy) {

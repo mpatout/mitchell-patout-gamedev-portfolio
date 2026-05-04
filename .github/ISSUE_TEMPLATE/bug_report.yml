@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible bug affecting a project or workflow.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Engine
+      options:
+        - Godot
+        - Defold
+        - Solar2D
+        - Panda3D
+        - Stride
+        - Cross-repo
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what you expected.
+      placeholder: Briefly describe the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, engine version, and build info.
+    validations:
+      required: true

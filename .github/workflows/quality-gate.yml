@@ -1,0 +1,27 @@
+﻿name: Quality Gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Markdown Lint
+        uses: DavidAnson/markdownlint-cli2-action@v17
+        with:
+          globs: |
+            **/*.md
+
+      - name: Structure Validation
+        shell: pwsh
+        run: ./scripts/validate-structure.ps1
+
+      - name: Godot Quality Gate
+        shell: pwsh
+        run: ./engines/godot/scripts/quality-gate.ps1

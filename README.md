@@ -48,7 +48,7 @@ To execute profiling capture in one pass:
 | Godot | Signal Chase | Production hardening in progress | `engines/Godot/scripts/main.gd`, `engines/Godot/TECHNICAL_PACKET.md`, `engines/Godot/ACCEPTANCE_TEST.md` |
 | Defold | Pulse Grid | Advanced slice complete (offline-first leaderboard sync) | `engines/defold/main/game.gui_script`, `engines/defold/TECHNICAL_PACKET.md`, `engines/defold/ACCEPTANCE_TEST.md` |
 | Solar2D | Spark Catch | Playable vertical slice in progress | `engines/solar2d/main.lua`, `engines/solar2d/TECHNICAL_PACKET.md`, `engines/solar2d/ACCEPTANCE_TEST.md` |
-| Panda3D | TBD | Planned | `engines/panda3d/PROJECT_SCOPE.md` |
+| Panda3D | Lane Drift | Playable vertical slice baseline implemented | `engines/panda3d/main.py`, `engines/panda3d/TECHNICAL_PACKET.md`, `engines/panda3d/ACCEPTANCE_TEST.md` |
 | Stride | TBD | Planned | `engines/stride/PROJECT_SCOPE.md` |
 
 ## Start Here
@@ -98,6 +98,7 @@ Current tag milestones:
 - `godot-signal-chase-v0.3.2`
 - `defold-pulse-grid-v0.2.0`
 - `solar2d-spark-catch-v0.2.1`
+- `panda3d-lane-drift-v0.1.0`
 
 To publish release pages with uploaded artifacts, run:
 

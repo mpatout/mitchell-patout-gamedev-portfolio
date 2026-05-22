@@ -1,16 +1,22 @@
-﻿# Project Scope
+﻿# PROJECT_SCOPE - Stride: Lane Surge
 
 ## Goal
 
-TBD
+Deliver a Stride-oriented C# baseline that proves gameplay systems, deterministic
+debug workflows, and release discipline while keeping the implementation fully
+reproducible in source control.
 
 ## In Scope
 
-- Core playable loop
-- Stable build and run path
-- Technical packet with profiling notes
+- C# lane-dodge core loop simulation with difficulty ramp.
+- Deterministic seed mode via environment variable.
+- JSON run trace export for debug and regression comparison.
+- Basic local persistence for best score.
+- Acceptance test, profiling baseline template, and release runbook.
+- Packaging and quality gate scripts.
 
 ## Out of Scope
 
-- Non-essential feature creep
-- Untracked third-party assets
+- Full Stride editor scene/content pipeline.
+- Audio integration.
+- Networked systems and online leaderboards.

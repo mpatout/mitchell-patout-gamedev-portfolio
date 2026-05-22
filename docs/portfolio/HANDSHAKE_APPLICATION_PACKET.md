@@ -13,6 +13,7 @@ Use this packet to answer the screening form with concrete, verifiable evidence.
   - Defold (Pulse Grid) advanced slice with offline-first leaderboard sync and release + quality scripts.
   - Solar2D (Spark Catch) playable vertical slice with mobile-first control model.
   - Panda3D (Lane Drift) playable vertical slice with deterministic seed mode and run trace export.
+  - Stride (Lane Surge) C# baseline slice with deterministic seed mode and run trace export.
 - Reproducible engineering process:
   - Acceptance tests per engine.
   - Structured release runbooks and package scripts.

@@ -10,7 +10,7 @@ Last updated: 2026-05-22
 - Phase 2 (Defold): Completed advanced slice with offline-first leaderboard sync
 - Phase 2 (Solar2D): In progress, playable vertical-slice baseline implemented
 - Phase 2 (Panda3D): In progress, playable vertical-slice baseline implemented
-- Phase 2 (Stride): Not started
+- Phase 2 (Stride): In progress, baseline simulation slice implemented
 - Phase 3+: Not started
 
 ## Engine Status
@@ -21,7 +21,7 @@ Last updated: 2026-05-22
 | Defold | Advanced slice complete | Gameplay now includes leaderboard cache + offline sync queue hooks; docs, acceptance tests, profiling template, and release scripts are in place; profiling capture and public release publication pending |
 | Solar2D | Vertical slice in progress | Core playable loop and portfolio docs implemented; profiling capture and release packaging pending |
 | Panda3D | Vertical slice in progress | Playable lane-dodge baseline implemented with deterministic seed + trace export; profiling capture and release publication pending |
-| Stride | Pending | Planned after Panda3D baseline |
+| Stride | Baseline in progress | C# Stride-oriented simulation baseline implemented with deterministic seed + trace export; profiling capture and release publication pending |
 
 ## Current Readiness Summary
 
@@ -30,6 +30,7 @@ Last updated: 2026-05-22
 - Defold has a complete baseline implementation with runnable gameplay and full documentation set.
 - Solar2D has transitioned from placeholder docs to a runnable baseline with deterministic controls and documented scope.
 - Panda3D now has a runnable baseline (`Lane Drift`) with deterministic seed and trace output.
+- Stride now has a runnable C# baseline (`Lane Surge`) with deterministic seed and trace output.
 - Release-note templates and API-based release publishing script are in place.
 - Profiling evidence index and readiness gate script are in place.
 - Handshake application packet maps form responses to verifiable repo evidence.

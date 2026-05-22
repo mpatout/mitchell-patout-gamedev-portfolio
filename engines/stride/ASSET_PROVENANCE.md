@@ -1,7 +1,9 @@
-﻿# Asset Provenance
+﻿# ASSET_PROVENANCE - Stride: Lane Surge
 
-List all non-original assets used by this project.
+This baseline currently uses code-only simulation and no external media assets.
 
 | Asset | Source URL | License | Author | Retrieved | Usage |
 | --- | --- | --- | --- | --- | --- |
-| TBD | TBD | TBD | TBD | TBD | TBD |
+| None | N/A | N/A | N/A | 2026-05-22 | Baseline is code-only |
+
+If external assets are introduced later, update this file before release.

@@ -83,7 +83,7 @@ Current tag milestones:
 
 - `godot-signal-chase-v0.3.2`
 - `defold-pulse-grid-v0.1.0`
-- `solar2d-spark-catch-v0.2.0`
+- `solar2d-spark-catch-v0.2.1`
 
 To publish release pages with uploaded artifacts, run:
 

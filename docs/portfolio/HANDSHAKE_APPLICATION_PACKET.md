@@ -76,7 +76,7 @@ Use this packet to answer the screening form with concrete, verifiable evidence.
 - Confirm tags exist:
   - `godot-signal-chase-v0.3.2`
   - `defold-pulse-grid-v0.1.0`
-  - `solar2d-spark-catch-v0.2.0`
+  - `solar2d-spark-catch-v0.2.1`
 - If token available, publish release pages with `scripts/publish-github-releases.ps1`.
 - Fill profiling baseline logs and add screenshots, then run `scripts/check-profiling-readiness.ps1`.
 - Run full final gate: `scripts/run-handshake-preflight.ps1`.

@@ -36,10 +36,10 @@ $releaseSpecs = @(
         AssetPath = "engines/defold/releases/defold-pulse-grid-v0.1.0-source.zip"
     },
     @{
-        Tag = "solar2d-spark-catch-v0.2.0"
-        Name = "Solar2D Spark Catch v0.2.0"
-        NotesPath = "docs/portfolio/release-notes/solar2d-spark-catch-v0.2.0.md"
-        AssetPath = "engines/solar2d/releases/solar2d-spark-catch-v0.2.0-source.zip"
+        Tag = "solar2d-spark-catch-v0.2.1"
+        Name = "Solar2D Spark Catch v0.2.1"
+        NotesPath = "docs/portfolio/release-notes/solar2d-spark-catch-v0.2.1.md"
+        AssetPath = "engines/solar2d/releases/solar2d-spark-catch-v0.2.1-source.zip"
     }
 )
 

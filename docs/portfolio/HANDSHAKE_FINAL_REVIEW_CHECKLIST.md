@@ -51,6 +51,7 @@ Run this checklist right before submitting the Handshake form.
 - [ ] All baseline docs have no `Pending` values.
 - [ ] Required screenshots exist under `docs/portfolio/evidence/profiling/`.
 - [ ] Profiling gate passes: `scripts/check-profiling-readiness.ps1`.
+- [ ] Optional accelerator used: `scripts/run-profiling-capture-sprint.ps1`.
 
 ## 5) Debugging Process Signal
 

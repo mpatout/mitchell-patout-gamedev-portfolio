@@ -27,6 +27,12 @@ It is designed for recruiter and reviewer efficiency:
 8. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
 9. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
 
+To execute profiling capture in one pass:
+
+```powershell
+./scripts/run-profiling-capture-sprint.ps1 -OpenPaths
+```
+
 ## Engine Snapshot
 
 | Engine | Project | Current State | Fast Evidence |

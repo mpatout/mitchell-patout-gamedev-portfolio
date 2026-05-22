@@ -32,3 +32,6 @@ From repository root, run:
 ```
 
 The check passes only when no `Pending` values remain in baseline docs and all required screenshots are present.
+
+For a one-pass capture workflow, use `docs/portfolio/PROFILING_CAPTURE_SPRINT.md`
+and `scripts/run-profiling-capture-sprint.ps1`.

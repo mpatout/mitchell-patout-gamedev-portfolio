@@ -3,6 +3,8 @@
 -- Demonstrates: Defold GUI system, gui.animate easing, gui.pick_node input,
 -- sys.save/load persistence, and idiomatic Lua closure patterns.
 
+local json = require("json")
+
 -- ---------------------------------------------------------------------------
 -- Constants
 -- ---------------------------------------------------------------------------
@@ -26,6 +28,12 @@ local MAX_LEVEL              = 10
 
 local SAVE_APP               = "pulsegrid"
 local SAVE_FILE              = "save.json"
+local LEADERBOARD_LIMIT      = 5
+local PENDING_QUEUE_LIMIT    = 20
+
+-- Remote sync is optional. Keep disabled by default so local fallback always works.
+local ENABLE_REMOTE_SYNC     = false
+local REMOTE_SYNC_URL        = ""
 
 -- ---------------------------------------------------------------------------
 -- Colours (vmath.vector4 RGBA in 0–1 range)
@@ -40,9 +48,6 @@ local C_MISS    = vmath.vector4(0.90, 0.20, 0.20, 1)
 -- ---------------------------------------------------------------------------
 local STATE = { TITLE = 1, PLAYING = 2, PAUSED = 3, GAME_OVER = 4 }
 
--- ---------------------------------------------------------------------------
--- Module-level game state (reset each round)
--- ---------------------------------------------------------------------------
 local state
 local score
 local best_score
@@ -55,12 +60,68 @@ local pulse_interval
 local active_window
 local active_cells   -- map: cell_index (0-15) → remaining window time
 local pulse_timer
+local leaderboard
+local pending_scores
+local sync_status
+local show_overlay
 
 -- ---------------------------------------------------------------------------
 -- Helpers
 -- ---------------------------------------------------------------------------
 local function cell_node(idx)
   return gui.get_node("cell_" .. idx)
+end
+
+local function leaderboard_summary()
+  if not leaderboard or #leaderboard == 0 then
+    return "Top scores: none yet"
+  end
+
+  local parts = {}
+  for i = 1, math.min(#leaderboard, 3) do
+    parts[#parts + 1] = tostring(i) .. ") " .. tostring(leaderboard[i])
+  end
+  return "Top scores: " .. table.concat(parts, "  ")
+end
+
+local function sanitize_scores(raw_scores, cap)
+  local out = {}
+  if type(raw_scores) ~= "table" then return out end
+  for _, value in ipairs(raw_scores) do
+    out[#out + 1] = math.max(0, tonumber(value) or 0)
+  end
+  table.sort(out, function(a, b) return a > b end)
+  while #out > cap do
+    table.remove(out)
+  end
+  return out
+end
+
+local function sanitize_queue(raw_scores)
+  local out = {}
+  if type(raw_scores) ~= "table" then return out end
+  for _, value in ipairs(raw_scores) do
+    out[#out + 1] = math.max(0, tonumber(value) or 0)
+  end
+  while #out > PENDING_QUEUE_LIMIT do
+    table.remove(out, 1)
+  end
+  return out
+end
+
+local function enqueue_pending_score(value)
+  pending_scores[#pending_scores + 1] = value
+  while #pending_scores > PENDING_QUEUE_LIMIT do
+    table.remove(pending_scores, 1)
+  end
+end
+
+local function insert_leaderboard_score(value)
+  leaderboard[#leaderboard + 1] = value
+  table.sort(leaderboard, function(a, b) return a > b end)
+  while #leaderboard > LEADERBOARD_LIMIT do
+    table.remove(leaderboard)
+  end
 end
 
 -- ---------------------------------------------------------------------------
@@ -70,11 +131,78 @@ local function load_best()
   local path = sys.get_save_file(SAVE_APP, SAVE_FILE)
   local data = sys.load(path)
   best_score = (data and data.best) and data.best or 0
+  leaderboard = sanitize_scores(data and data.leaderboard or {}, LEADERBOARD_LIMIT)
+  pending_scores = sanitize_queue(data and data.pending_scores or {})
+
+  if #pending_scores > 0 then
+    sync_status = "Offline queue: " .. tostring(#pending_scores) .. " pending"
+  else
+    sync_status = "Local leaderboard mode"
+  end
 end
 
 local function save_best()
   local path = sys.get_save_file(SAVE_APP, SAVE_FILE)
-  sys.save(path, { best = best_score })
+  sys.save(path, {
+    best = best_score,
+    leaderboard = leaderboard,
+    pending_scores = pending_scores,
+  })
+end
+
+local function on_sync_response(self, request_id, response)
+  if response.status >= 200 and response.status < 300 then
+    sync_status = "Remote sync OK"
+    pending_scores = {}
+
+    if response.response and response.response ~= "" then
+      local ok, decoded = pcall(json.decode, response.response)
+      if decoded and decoded.top and type(decoded.top) == "table" then
+        leaderboard = sanitize_scores(decoded.top, LEADERBOARD_LIMIT)
+      end
+    end
+
+    save_best()
+    return
+  end
+
+  sync_status = "Remote sync failed (" .. tostring(response.status) .. ")"
+  save_best()
+end
+
+local function try_remote_sync()
+  if not ENABLE_REMOTE_SYNC then
+    sync_status = "Local leaderboard mode"
+    save_best()
+    return
+  end
+
+  if REMOTE_SYNC_URL == "" then
+    sync_status = "Remote sync disabled: no endpoint configured"
+    save_best()
+    return
+  end
+
+  if #pending_scores == 0 then
+    sync_status = "Remote sync idle"
+    save_best()
+    return
+  end
+
+  local payload = json.encode({
+    app = SAVE_APP,
+    scores = pending_scores,
+  })
+
+  http.request(
+    REMOTE_SYNC_URL,
+    "POST",
+    on_sync_response,
+    { ["Content-Type"] = "application/json" },
+    payload
+  )
+
+  sync_status = "Remote sync requested"
 end
 
 -- ---------------------------------------------------------------------------
@@ -178,19 +306,26 @@ local function on_miss(idx)
 
   if lives <= 0 then
     state = STATE.GAME_OVER
+    insert_leaderboard_score(score)
+    enqueue_pending_score(score)
+    try_remote_sync()
     save_best()
-    gui.set_text(gui.get_node("state_label"),
-      "GAME OVER\nScore: " .. score .. "   Best: " .. best_score
+    show_overlay("GAME OVER\nScore: " .. score .. "   Best: " .. best_score
       .. "\nEnter = restart   Esc = quit")
-    gui.set_enabled(gui.get_node("overlay"), true)
   end
 end
 
 -- ---------------------------------------------------------------------------
 -- Round lifecycle
 -- ---------------------------------------------------------------------------
-local function show_overlay(text)
-  gui.set_text(gui.get_node("state_label"), text)
+show_overlay = function(text)
+  local lines = {
+    text,
+    "",
+    leaderboard_summary(),
+    sync_status or "",
+  }
+  gui.set_text(gui.get_node("state_label"), table.concat(lines, "\n"))
   gui.set_enabled(gui.get_node("overlay"), true)
 end
 
@@ -217,6 +352,7 @@ function init(self)
   math.randomseed(os.time())
   msg.post(".", "acquire_input_focus")
   load_best()
+  try_remote_sync()
   score       = 0
   lives       = STARTING_LIVES
   level       = 1
@@ -237,6 +373,9 @@ function update(self, dt)
   if round_timer <= 0 then
     round_timer = 0
     state = STATE.GAME_OVER
+    insert_leaderboard_score(score)
+    enqueue_pending_score(score)
+    try_remote_sync()
     save_best()
     show_overlay("TIME UP!\nScore: " .. score .. "   Best: " .. best_score
       .. "\nEnter = restart")

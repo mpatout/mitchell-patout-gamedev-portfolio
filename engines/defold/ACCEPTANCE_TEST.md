@@ -1,4 +1,4 @@
-# ACCEPTANCE_TEST \u2014 Defold: Pulse Grid
+# ACCEPTANCE_TEST - Defold: Pulse Grid
 
 ## Prerequisites
 
@@ -46,16 +46,25 @@
 | 4.2 | Close and reopen the game. | "Best:" label on title screen shows N. | |
 | 4.3 | Achieve score < N in next round. | Best score label still shows N (not overwritten). | |
 
-## Section 5: Stability
+## Section 5: Leaderboard & Offline Sync Fallback
 
 | # | Test | Expected Result | Pass? |
 |---|---|---|---|
-| 5.1 | Deliberately miss all cells for a full round (3 lives). | Game-over triggers cleanly; no crash or freeze. | |
-| 5.2 | Click rapidly across the whole grid. | No crash; only active cells register hits. | |
-| 5.3 | Restart 5 times in succession. | Each round starts cleanly; no state bleed from previous round. | |
+| 5.1 | Finish a round with score S1, then another with score S2 (S2 > S1). | Overlay shows top scores with S2 listed above S1. | |
+| 5.2 | Restart app after two scored rounds. | Overlay still shows previously stored top scores. | |
+| 5.3 | Play with default config (`ENABLE_REMOTE_SYNC = false`). | Overlay shows local mode/offline queue status; no crash or request failure. | |
+| 5.4 | Inspect save payload via `sys.load` during debug. | Save table contains keys: `best`, `leaderboard`, `pending_scores`. | |
+
+## Section 6: Stability
+
+| # | Test | Expected Result | Pass? |
+|---|---|---|---|
+| 6.1 | Deliberately miss all cells for a full round (3 lives). | Game-over triggers cleanly; no crash or freeze. | |
+| 6.2 | Click rapidly across the whole grid. | No crash; only active cells register hits. | |
+| 6.3 | Restart 5 times in succession. | Each round starts cleanly; no state bleed from previous round. | |
 
 ---
 
 ## Submission Exit Criteria
 
-All tests in Sections 1\u20135 must pass before marking v0.1.0 as submission-ready.
+All tests in Sections 1-6 must pass before marking v0.2.0 as submission-ready.

@@ -11,7 +11,7 @@ engines/defold/
     ├── main.collection       Root bootstrap collection
     ├── game.go               Game object prototype (owns GUI component)
     ├── game.gui              GUI layout: 16 cell box nodes + HUD text nodes
-    └── game.gui_script       All game logic in Lua (~240 LOC)
+    └── game.gui_script       All game logic in Lua (~330 LOC)
 ```
 
 ### Why a Single GUI Script?
@@ -41,7 +41,8 @@ demonstrates the message-passing API that would be used there.
 | Cell rendering | GUI TYPE_BOX nodes | No texture asset required; colour via `gui.set_color` |
 | Animation | `gui.animate` OUTQUAD | Built-in easing; non-blocking; cancellable |
 | Input | `gui.pick_node` | Correct for GUI-space coordinates; works for touch |
-| Persistence | `sys.save` / `sys.load` | Defold-idiomatic; cross-platform |
+| Persistence | `sys.save` / `sys.load` | Defold-idiomatic; stores best, top-5 leaderboard, pending sync queue |
+| Leaderboard model | Offline-first queue + optional HTTP sync | No backend required for local mode; remote path can be enabled later |
 | Difficulty curve | Linear per-level deduction capped at min | Predictable feel; easily tunable |
 | Combo scoring | pts = 1 + min(floor(combo/3), 3) | Low floor, meaningful ceiling; not punishing |
 
@@ -70,11 +71,30 @@ gui.animate(cell_node(idx), gui.PROP_COLOR, C_IDLE,
 ```lua
 local function save_best()
   sys.save(sys.get_save_file("pulsegrid", "save.json"),
-           { best = best_score })
+           {
+             best = best_score,
+             leaderboard = leaderboard,
+             pending_scores = pending_scores,
+           })
 end
 local function load_best()
   local data = sys.load(sys.get_save_file("pulsegrid", "save.json"))
   best_score = (data and data.best) and data.best or 0
+  leaderboard = sanitize_scores(data and data.leaderboard or {}, 5)
+  pending_scores = sanitize_queue(data and data.pending_scores or {})
+end
+```
+
+### Optional Remote Sync Hook
+```lua
+-- Disabled by default: keeps portfolio artifact fully local and deterministic.
+local ENABLE_REMOTE_SYNC = false
+local REMOTE_SYNC_URL = ""
+
+if ENABLE_REMOTE_SYNC and REMOTE_SYNC_URL ~= "" and #pending_scores > 0 then
+  http.request(REMOTE_SYNC_URL, "POST", on_sync_response,
+    { ["Content-Type"] = "application/json" },
+    json.encode({ app = "pulsegrid", scores = pending_scores }))
 end
 ```
 
@@ -92,6 +112,8 @@ end
   is called in `init` and that the input binding action IDs match.
 - `gui.cancel_animation` before `gui.animate` prevents colour flickering on
   rapid hit/miss sequences.
+- Queue truncation (`PENDING_QUEUE_LIMIT = 20`) caps offline growth and keeps
+  save payloads bounded across long sessions.
 
 ## Performance Notes
 

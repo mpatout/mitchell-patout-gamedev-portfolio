@@ -1,5 +1,21 @@
 ﻿# CHANGELOG — Defold: Pulse Grid
 
+## [0.2.0] — 2026-05-22
+
+### Added
+
+- Local top-5 leaderboard persistence in save payload.
+- Offline-first pending score queue (`PENDING_QUEUE_LIMIT = 20`).
+- Overlay leaderboard summary (top 3 shown) on title/game-over/time-up states.
+- Optional remote sync hook via `http.request` + JSON payload.
+- Remote sync status messaging in overlay UI.
+
+### Changed
+
+- Save payload evolved from `{ best }` to `{ best, leaderboard, pending_scores }`.
+- Acceptance test expanded for leaderboard and offline sync fallback checks.
+- Technical packet updated with queue and sync architecture notes.
+
 ## [0.1.0] — 2026-05-04
 
 ### Added

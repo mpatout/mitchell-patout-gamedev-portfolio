@@ -97,6 +97,6 @@ if ($pass) {
     Write-Host "Quality gate PASSED" -ForegroundColor Cyan
     exit 0
 } else {
-    Write-Host "Quality gate FAILED — review errors above" -ForegroundColor Red
+    Write-Host "Quality gate FAILED - review errors above" -ForegroundColor Red
     exit 1
 }

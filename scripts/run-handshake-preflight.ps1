@@ -34,7 +34,7 @@ try {
 # 2) Required tags
 $requiredTags = @(
     "godot-signal-chase-v0.3.2",
-    "defold-pulse-grid-v0.1.0",
+    "defold-pulse-grid-v0.2.0",
     "solar2d-spark-catch-v0.2.1"
 )
 
@@ -50,7 +50,7 @@ foreach ($tag in $requiredTags) {
 # 3) Required release notes
 $requiredNotes = @(
     "docs/portfolio/release-notes/godot-signal-chase-v0.3.2.md",
-    "docs/portfolio/release-notes/defold-pulse-grid-v0.1.0.md",
+    "docs/portfolio/release-notes/defold-pulse-grid-v0.2.0.md",
     "docs/portfolio/release-notes/solar2d-spark-catch-v0.2.1.md"
 )
 

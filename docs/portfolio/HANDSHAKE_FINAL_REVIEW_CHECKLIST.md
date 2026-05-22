@@ -8,7 +8,7 @@ Run this checklist right before submitting the Handshake form.
 - [ ] `main` branch is up to date.
 - [ ] Required tags exist:
   - `godot-signal-chase-v0.3.2`
-  - `defold-pulse-grid-v0.1.0`
+  - `defold-pulse-grid-v0.2.0`
   - `solar2d-spark-catch-v0.2.1`
 
 ## 2) Evidence Coverage (Role Prompt Mapping)

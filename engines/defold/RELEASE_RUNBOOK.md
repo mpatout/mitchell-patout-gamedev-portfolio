@@ -1,8 +1,8 @@
-# RELEASE_RUNBOOK \u2014 Defold: Pulse Grid
+# RELEASE_RUNBOOK - Defold: Pulse Grid
 
 ## Versioning Policy
 
-Follow SemVer (`MAJOR.MINOR.PATCH`). Update `game.project` \u2192 `version` field
+Follow SemVer (`MAJOR.MINOR.PATCH`). Update `game.project` -> `version` field
 and `CHANGELOG.md` before tagging.
 
 ## Pre-Flight Checks
@@ -18,10 +18,10 @@ Both must exit 0 before proceeding.
 ## Packaging Steps
 
 ```powershell
-./engines/defold/scripts/package-release.ps1 -Version 0.1.0
+./engines/defold/scripts/package-release.ps1 -Version 0.2.0
 ```
 
-Artifact written to: `engines/defold/releases/defold-pulse-grid-v0.1.0-source.zip`
+Artifact written to: `engines/defold/releases/defold-pulse-grid-v0.2.0-source.zip`
 
 Verify output:
 1. Unzip and confirm all source files are present.
@@ -31,18 +31,18 @@ Verify output:
 ## Tagging & GitHub Release
 
 ```powershell
-git tag defold-v0.1.0
-git push origin defold-v0.1.0
+git tag defold-pulse-grid-v0.2.0
+git push origin defold-pulse-grid-v0.2.0
 ```
 
 On GitHub:
-1. **Releases \u2192 Draft a new release** \u2192 tag `defold-v0.1.0`.
-2. Title: `Defold: Pulse Grid v0.1.0`.
-3. Copy the `[0.1.0]` section from `CHANGELOG.md` as release notes.
-4. Attach `defold-pulse-grid-v0.1.0-source.zip`.
+1. **Releases -> Draft a new release** -> tag `defold-pulse-grid-v0.2.0`.
+2. Title: `Defold: Pulse Grid v0.2.0`.
+3. Copy the `[0.2.0]` section from `CHANGELOG.md` as release notes.
+4. Attach `defold-pulse-grid-v0.2.0-source.zip`.
 5. Publish.
 
 ## Post-Release
 
-- Update `docs/portfolio/IMPLEMENTATION_STATUS.md` \u2192 mark Defold row published.
-- Update `docs/portfolio/COMPETENCY_MATRIX.md` \u2192 add evidence links for Defold row.
+- Update `docs/portfolio/IMPLEMENTATION_STATUS.md` -> mark Defold row published.
+- Update `docs/portfolio/COMPETENCY_MATRIX.md` -> add evidence links for Defold row.

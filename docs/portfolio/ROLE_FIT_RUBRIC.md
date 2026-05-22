@@ -27,3 +27,16 @@ This rubric maps repository evidence to game development specialist expectations
 ## Pass Condition
 
 A project is considered portfolio-ready when all required artifacts exist, quickstart succeeds on a clean environment, and technical evidence is present.
+
+## Current Evidence Snapshot
+
+- Godot: runnable, documented, acceptance-tested, deterministic seed + replay trace instrumentation.
+- Defold: runnable, documented, acceptance-tested, release scripts and quality gate present.
+- Solar2D: runnable vertical slice, documented, acceptance-tested, release scripts and quality gate present.
+- Panda3D/Stride: planned only; no runnable implementation yet.
+
+## Remaining Gaps For Reviewer Confidence
+
+- Capture and commit real profiling data/screenshots for all active engines.
+- Publish tagged GitHub releases with downloadable source artifacts and notes.
+- Add one public debugging case study issue/PR showing repro -> fix workflow.

@@ -15,6 +15,24 @@ It is designed for recruiter and reviewer efficiency:
 - Evidence of architecture, debugging, and performance work
 - Consistent release packaging and documentation quality
 
+## Reviewer Quick Path (10 Minutes)
+
+1. Open competency coverage: `docs/portfolio/COMPETENCY_MATRIX.md`
+2. Run flagship Godot slice: `engines/Godot/README.md`
+3. Run Defold slice: `engines/defold/README.md`
+4. Run Solar2D slice: `engines/solar2d/README.md`
+5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
+
+## Engine Snapshot
+
+| Engine | Project | Current State | Fast Evidence |
+| --- | --- | --- | --- |
+| Godot | Signal Chase | Production hardening in progress | `engines/Godot/scripts/main.gd`, `engines/Godot/TECHNICAL_PACKET.md`, `engines/Godot/ACCEPTANCE_TEST.md` |
+| Defold | Pulse Grid | Production-ready baseline complete | `engines/defold/main/game.gui_script`, `engines/defold/TECHNICAL_PACKET.md`, `engines/defold/ACCEPTANCE_TEST.md` |
+| Solar2D | Spark Catch | Playable vertical slice in progress | `engines/solar2d/main.lua`, `engines/solar2d/TECHNICAL_PACKET.md`, `engines/solar2d/ACCEPTANCE_TEST.md` |
+| Panda3D | TBD | Planned | `engines/panda3d/PROJECT_SCOPE.md` |
+| Stride | TBD | Planned | `engines/stride/PROJECT_SCOPE.md` |
+
 ## Start Here
 
 1. Pick an engine directory under `engines/`.
@@ -23,6 +41,8 @@ It is designed for recruiter and reviewer efficiency:
 4. Review `TECHNICAL_PACKET.md` for architecture and profiling notes.
 
 Portfolio execution progress is tracked in `docs/portfolio/IMPLEMENTATION_STATUS.md`.
+
+Cross-engine architecture snapshots are tracked in `docs/standards/ARCHITECTURE_REFERENCE.md`.
 
 ## Repository Layout
 

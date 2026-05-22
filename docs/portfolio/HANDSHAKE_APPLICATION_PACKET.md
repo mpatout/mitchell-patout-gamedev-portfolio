@@ -19,6 +19,10 @@ Use this packet to answer the screening form with concrete, verifiable evidence.
 
 ## Suggested Form Wording (Truthful)
 
+For copy/paste-ready field responses, use:
+
+- `docs/portfolio/HANDSHAKE_FORM_RESPONSE_BANK.md`
+
 ### What is your current job title?
 
 - Example: Independent Game Development Portfolio Builder (or your current real title).

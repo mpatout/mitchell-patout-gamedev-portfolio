@@ -26,6 +26,7 @@ It is designed for recruiter and reviewer efficiency:
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
 8. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
 9. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
+10. Use form response bank: `docs/portfolio/HANDSHAKE_FORM_RESPONSE_BANK.md`
 
 To execute profiling capture in one pass:
 

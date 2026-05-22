@@ -16,7 +16,7 @@ Last updated: 2026-05-22
 
 | Engine | Status | Notes |
 | --- | --- | --- |
-| Godot | Production hardening in progress | Core systems, quality gates, deterministic seed mode, and replay trace export are in place; profiler capture and public GitHub release still pending |
+| Godot | Production hardening in progress | Core systems, dynamic pressure director, deterministic seed mode, and replay trace export are in place; profiler capture and public GitHub release still pending |
 | Defold | Production-ready baseline complete | Gameplay, docs, acceptance test, profiling template, and release scripts are in place; profiling capture and public release publication pending |
 | Solar2D | Vertical slice in progress | Core playable loop and portfolio docs implemented; profiling capture and release packaging pending |
 | Panda3D | Pending | Planned after Solar2D baseline |

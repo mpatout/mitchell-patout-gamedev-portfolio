@@ -43,6 +43,7 @@ $env:SIGNAL_CHASE_SEED="424242"; godot4 --path engines/Godot
 ## Core Systems
 
 - Progressive difficulty (levels scale by score)
+- Dynamic pressure director that modulates threat intensity and powerup cadence
 - Multiple threat types (chasing enemies + static hazards)
 - Combo scoring with time window
 - Life system with short invulnerability after damage
@@ -61,6 +62,7 @@ $env:SIGNAL_CHASE_SEED="424242"; godot4 --path engines/Godot
 ## Technical Highlights
 
 - Explicit game state machine (`PLAYING`, `PAUSED`, `ROUND_OVER`)
+- Pressure-aware enemy movement scaling for adaptive run pacing
 - Difficulty controller that scales enemy/hazard pressure by score milestones
 - Gameplay persistence for best-score continuity between sessions
 - HUD telemetry for score/time/lives/level/combo/best state

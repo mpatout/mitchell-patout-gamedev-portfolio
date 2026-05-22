@@ -28,6 +28,14 @@ const TRACE_FILE_PATH := "user://signal_chase_latest_run.json"
 const SEED_ENV_VAR := "SIGNAL_CHASE_SEED"
 const INPUT_SAMPLE_INTERVAL_SECONDS := 0.2
 const MAX_TRACE_EVENTS := 900
+const BASE_PRESSURE := 0.35
+const PRESSURE_TARGET_BONUS := 0.055
+const PRESSURE_COMBO_BONUS := 0.02
+const PRESSURE_HIT_PENALTY := 0.22
+const PRESSURE_DECAY_PER_SECOND := 0.06
+const PRESSURE_STASIS_RELIEF_PER_SECOND := 0.14
+const POWERUP_INTERVAL_MIN := 8.5
+const POWERUP_INTERVAL_MAX := 16.5
 
 @onready var score_label: Label = $HUD/Overlay/ScoreLabel
 @onready var timer_label: Label = $HUD/Overlay/TimerLabel
@@ -63,6 +71,7 @@ var current_run_seed := 0
 var run_elapsed := 0.0
 var input_sample_timer := 0.0
 var run_trace_events: Array[Dictionary] = []
+var pressure_level := BASE_PRESSURE
 
 
 func _ready() -> void:
@@ -96,6 +105,7 @@ func _process(delta: float) -> void:
 
 	stasis_remaining = max(stasis_remaining - delta, 0.0)
 	powerup_spawn_cooldown = max(powerup_spawn_cooldown - delta, 0.0)
+	_update_pressure_director(delta)
 
 	_update_enemy_positions(delta)
 	_check_hazard_collisions()
@@ -114,7 +124,7 @@ func _process(delta: float) -> void:
 
 	if not powerup_active and powerup_spawn_cooldown <= 0.0:
 		_spawn_powerup()
-		powerup_spawn_cooldown = POWERUP_SPAWN_INTERVAL
+		powerup_spawn_cooldown = _get_powerup_interval_from_pressure()
 
 	time_remaining = max(time_remaining - delta, 0.0)
 	if time_remaining <= 0.0:
@@ -176,6 +186,7 @@ func _restart_round(from_restart_prompt: bool) -> void:
 	state = GameState.PLAYING
 	run_elapsed = 0.0
 	input_sample_timer = 0.0
+	pressure_level = BASE_PRESSURE
 	run_trace_events.clear()
 	_log_run_event("round_start", {
 		"seed": current_run_seed,
@@ -277,6 +288,7 @@ func _collect_target() -> void:
 
 	var points := 1 + int(combo_count / 3)
 	score += points
+	pressure_level = min(1.0, pressure_level + PRESSURE_TARGET_BONUS + min(0.08, float(combo_count) * PRESSURE_COMBO_BONUS))
 	time_remaining = min(ROUND_TIME_SECONDS + 20.0, time_remaining + TARGET_TIME_BONUS)
 
 	if score > best_score:
@@ -286,6 +298,7 @@ func _collect_target() -> void:
 	_log_run_event("target_collected", {
 		"score": score,
 		"combo": combo_count,
+		"pressure": snapped(pressure_level, 0.001),
 		"time_remaining": snapped(time_remaining, 0.01),
 		"x": snapped(target_position.x, 0.01),
 		"y": snapped(target_position.y, 0.01)
@@ -305,6 +318,7 @@ func _update_difficulty_from_score() -> void:
 			"from": previous_level,
 			"to": level,
 			"score": score,
+			"pressure": snapped(pressure_level, 0.001),
 			"time_remaining": snapped(time_remaining, 0.01)
 		})
 		state_label.text = "Threat level %d engaged." % level
@@ -347,6 +361,7 @@ func _update_enemy_positions(delta: float) -> void:
 			continue
 
 		var speed := BASE_ENEMY_SPEED + float(level - 1) * ENEMY_SPEED_STEP + float(index) * 4.0
+		speed *= (0.82 + pressure_level * 0.7)
 		if stasis_remaining > 0.0:
 			speed *= 0.35
 
@@ -385,9 +400,11 @@ func _apply_hit(message: String) -> void:
 	hit_invulnerability_remaining = HIT_INVULNERABILITY_SECONDS
 	combo_count = 0
 	combo_timer = 0.0
+	pressure_level = max(0.0, pressure_level - PRESSURE_HIT_PENALTY)
 	_log_run_event("player_hit", {
 		"reason": message,
 		"lives": max(lives, 0),
+		"pressure": snapped(pressure_level, 0.001),
 		"time_remaining": snapped(time_remaining, 0.01),
 		"x": snapped(player_position.x, 0.01),
 		"y": snapped(player_position.y, 0.01)
@@ -401,6 +418,7 @@ func _spawn_powerup() -> void:
 	_log_run_event("powerup_spawned", {
 		"x": snapped(powerup_position.x, 0.01),
 		"y": snapped(powerup_position.y, 0.01),
+		"pressure": snapped(pressure_level, 0.001),
 		"time_remaining": snapped(time_remaining, 0.01)
 	})
 
@@ -412,6 +430,7 @@ func _end_round(message: String) -> void:
 		"reason": message,
 		"score": score,
 		"lives": max(lives, 0),
+		"pressure": snapped(pressure_level, 0.001),
 		"time_remaining": snapped(time_remaining, 0.01)
 	})
 	_write_run_trace(message)
@@ -504,9 +523,28 @@ func _write_run_trace(end_reason: String) -> void:
 		"score": score,
 		"best_score": best_score,
 		"level": level,
+		"pressure": snapped(pressure_level, 0.001),
 		"lives": max(lives, 0),
 		"end_reason": end_reason,
 		"events": run_trace_events
 	}
 
 	file.store_string(JSON.stringify(trace_payload, "\t"))
+
+
+func _update_pressure_director(delta: float) -> void:
+	var pressure_before := pressure_level
+	pressure_level = max(0.0, pressure_level - PRESSURE_DECAY_PER_SECOND * delta)
+	if stasis_remaining > 0.0:
+		pressure_level = max(0.0, pressure_level - PRESSURE_STASIS_RELIEF_PER_SECOND * delta)
+
+	if absf(pressure_before - pressure_level) >= 0.08:
+		_log_run_event("pressure_shift", {
+			"from": snapped(pressure_before, 0.001),
+			"to": snapped(pressure_level, 0.001),
+			"time_remaining": snapped(time_remaining, 0.01)
+		})
+
+
+func _get_powerup_interval_from_pressure() -> float:
+	return lerp(POWERUP_INTERVAL_MAX, POWERUP_INTERVAL_MIN, pressure_level)

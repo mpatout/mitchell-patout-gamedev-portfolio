@@ -17,6 +17,7 @@
 - Separate collision checks by domain (target, enemy, hazard, powerup) for maintainability.
 - Support deterministic seeded runs with `SIGNAL_CHASE_SEED` for reproducible bug reports.
 - Capture lightweight telemetry events to create replay-ready run traces.
+- Use a dynamic pressure director to adapt enemy speed and powerup interval to player performance.
 
 ## Deterministic Replay Instrumentation
 
@@ -38,6 +39,8 @@
 - Enemy speed starts at 120 px/s with incremental scaling to maintain pressure.
 - Combo window is tuned to 2.6s to reward deliberate route planning over passive play.
 - Stasis powerup applies a temporary enemy slowdown for recovery without trivializing challenge.
+- Pressure director increases intensity when chains are sustained, then decays pressure
+	over time or after player damage to stabilize pacing.
 
 ## Debugging Notes
 
@@ -54,6 +57,7 @@
 - Enemy and hazard counts are level-capped to protect frame consistency.
 - Profiling capture process is documented in `PROFILING_BASELINE.md`.
 - Replay event count is bounded (`MAX_TRACE_EVENTS`) to avoid runaway trace files.
+- Pressure-adjusted powerup interval is bounded (8.5s to 16.5s) to avoid extreme variance.
 
 ## Known Limitations
 

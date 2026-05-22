@@ -13,6 +13,7 @@ Use this checklist before creating any submission release.
 
 - [ ] Start a new round and collect at least 3 targets.
 - [ ] Reach level 5 or higher without script/runtime errors.
+- [ ] Sustain a combo chain and verify enemy pressure visibly increases.
 - [ ] Trigger stasis powerup and verify enemy slowdown is visible.
 - [ ] Take 3 hits and verify round-over state appears.
 - [ ] Press Enter at round-over and verify clean restart.

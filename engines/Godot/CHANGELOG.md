@@ -7,6 +7,7 @@
 - Deterministic run support through `SIGNAL_CHASE_SEED` environment variable.
 - Replay trace export to `user://signal_chase_latest_run.json` with sampled input and gameplay events.
 - Telemetry event logging for target captures, hits, level-ups, powerups, and round end.
+- Dynamic pressure director that adapts enemy speed and powerup cadence to run momentum.
 
 ### Changed
 

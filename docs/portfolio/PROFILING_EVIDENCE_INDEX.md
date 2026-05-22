@@ -35,3 +35,11 @@ The check passes only when no `Pending` values remain in baseline docs and all r
 
 For a one-pass capture workflow, use `docs/portfolio/PROFILING_CAPTURE_SPRINT.md`
 and `scripts/run-profiling-capture-sprint.ps1`.
+
+To populate all three baseline docs from one data file, use:
+
+```powershell
+./scripts/apply-profiling-captures.ps1 -DataFile "docs/portfolio/evidence/profiling/capture-data.json" -ValidateScreenshots
+```
+
+Data template: `docs/portfolio/evidence/profiling/capture-data.template.json`.

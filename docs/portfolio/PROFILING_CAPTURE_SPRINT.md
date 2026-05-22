@@ -42,6 +42,21 @@ From repository root:
 ./scripts/run-profiling-capture-sprint.ps1 -OpenPaths
 ```
 
+## Auto-Apply Captured Metrics
+
+1. Copy template file:
+
+```powershell
+Copy-Item docs/portfolio/evidence/profiling/capture-data.template.json docs/portfolio/evidence/profiling/capture-data.json
+```
+
+2. Fill measured values in `capture-data.json`.
+3. Apply values to all baseline docs:
+
+```powershell
+./scripts/apply-profiling-captures.ps1 -DataFile "docs/portfolio/evidence/profiling/capture-data.json" -ValidateScreenshots
+```
+
 After captures and doc updates:
 
 ```powershell

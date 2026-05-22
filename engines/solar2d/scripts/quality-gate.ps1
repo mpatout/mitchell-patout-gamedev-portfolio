@@ -23,7 +23,8 @@ $required = @(
     "engines/solar2d/RELEASE_RUNBOOK.md",
     "engines/solar2d/CHANGELOG.md",
     "engines/solar2d/ASSET_PROVENANCE.md",
-    "engines/solar2d/scripts/package-release.ps1"
+    "engines/solar2d/scripts/package-release.ps1",
+    "engines/solar2d/scripts/summarize-trace.ps1"
 )
 
 foreach ($f in $required) {

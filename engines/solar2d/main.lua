@@ -18,6 +18,9 @@ local MIN_SPAWN_INTERVAL = 0.26
 local BASE_FALL_SPEED = 220
 local OVERCHARGE_DURATION = 6
 local OVERCHARGE_COOLDOWN = 8
+local TRACE_FILE_NAME = "spark_catch_latest_run.json"
+local SEED_ENV_VAR = "SPARK_CATCH_SEED"
+local TRACE_MAX_EVENTS = 700
 
 local state = "title"
 local score = 0
@@ -32,8 +35,16 @@ local spawnTimer = 0
 local overchargeTimer = 0
 local overchargeCooldown = 0
 local lastFrameTime = system.getTimer()
+local runElapsed = 0
+local traceEvents = {}
+local lastLoggedLevel = 1
+local seedLocked = false
+local seedBase = os.time()
+local runIndex = 0
+local currentRunSeed = 0
 
 local savePath = system.pathForFile("spark_catch_save.json", system.DocumentsDirectory)
+local tracePath = system.pathForFile(TRACE_FILE_NAME, system.DocumentsDirectory)
 
 local rootGroup = display.newGroup()
 local gameGroup = display.newGroup()
@@ -94,6 +105,77 @@ local function clamp(value, minValue, maxValue)
     return maxValue
   end
   return value
+end
+
+local function roundNumber(value, decimals)
+  local factor = 10 ^ decimals
+  return math.floor((value * factor) + 0.5) / factor
+end
+
+local function logTrace(eventType, payload)
+  if #traceEvents >= TRACE_MAX_EVENTS then
+    return
+  end
+
+  local entry = {
+    t = roundNumber(runElapsed, 3),
+    type = eventType
+  }
+
+  if payload then
+    for key, value in pairs(payload) do
+      entry[key] = value
+    end
+  end
+
+  traceEvents[#traceEvents + 1] = entry
+end
+
+local function writeTrace(endReason)
+  local file = io.open(tracePath, "w")
+  if not file then
+    return
+  end
+
+  local payload = {
+    engine = "Solar2D",
+    project = "Spark Catch",
+    seed = currentRunSeed,
+    seedLocked = seedLocked,
+    runIndex = runIndex,
+    durationSeconds = roundNumber(runElapsed, 3),
+    score = score,
+    bestScore = bestScore,
+    level = level,
+    lives = lives,
+    endReason = endReason,
+    events = traceEvents
+  }
+
+  file:write(json.encode(payload))
+  io.close(file)
+end
+
+local function configureSeedMode()
+  local envSeed = os.getenv(SEED_ENV_VAR)
+  local parsed = tonumber(envSeed)
+  if parsed then
+    seedBase = parsed
+    seedLocked = true
+  else
+    seedBase = os.time()
+    seedLocked = false
+  end
+end
+
+local function prepareRoundSeed()
+  if seedLocked then
+    currentRunSeed = seedBase
+  else
+    currentRunSeed = seedBase + (runIndex * 9973)
+  end
+  runIndex = runIndex + 1
+  math.randomseed(currentRunSeed)
 end
 
 local function loadBestScore()
@@ -173,6 +255,9 @@ local function resetRoundState()
   spawnTimer = 0
   overchargeTimer = 0
   overchargeCooldown = 0
+  runElapsed = 0
+  traceEvents = {}
+  lastLoggedLevel = 1
   catcher.x = centerX
   clearDrops()
   updateHud()
@@ -184,6 +269,13 @@ local function endRound()
     bestScore = score
     saveBestScore()
   end
+  logTrace("round_end", {
+    reason = (lives <= 0) and "lives_depleted" or "time_elapsed",
+    score = score,
+    level = level,
+    lives = lives
+  })
+  writeTrace((lives <= 0) and "lives_depleted" or "time_elapsed")
   setPrompt("Round Complete", "Tap to restart")
   updateHud()
 end
@@ -197,17 +289,29 @@ local function applySparkCatch()
 
   score = score + (bonus * multiplier)
   combo = combo + 1
+  logTrace("spark_catch", {
+    score = score,
+    combo = combo,
+    overcharge = overchargeTimer > 0
+  })
 end
 
 local function applyShardCatch()
   combo = 0
   lives = lives - 1
+  logTrace("shard_catch", {
+    lives = lives
+  })
 end
 
 local function applyOverchargeCatch()
   combo = 0
   overchargeTimer = OVERCHARGE_DURATION
   score = score + 2
+  logTrace("overcharge_catch", {
+    score = score,
+    duration = OVERCHARGE_DURATION
+  })
 end
 
 local function spawnDrop()
@@ -215,6 +319,9 @@ local function spawnDrop()
   if overchargeCooldown <= 0 and math.random() < 0.10 then
     dropType = "overcharge"
     overchargeCooldown = OVERCHARGE_COOLDOWN
+    logTrace("overcharge_spawn", {
+      cooldown = OVERCHARGE_COOLDOWN
+    })
   else
     local roll = math.random()
     if roll < 0.24 then
@@ -254,20 +361,27 @@ local function spawnDrop()
 end
 
 local function startRound()
+  prepareRoundSeed()
   resetRoundState()
   state = "playing"
+  logTrace("round_start", {
+    seed = currentRunSeed,
+    seedLocked = seedLocked
+  })
   hidePrompt()
 end
 
 local function setPaused(enabled)
   if enabled and state == "playing" then
     state = "paused"
+    logTrace("pause", { paused = true })
     setPrompt("Paused", "Press P to resume")
     return
   end
 
   if (not enabled) and state == "paused" then
     state = "playing"
+    logTrace("pause", { paused = false })
     hidePrompt()
   end
 end
@@ -331,6 +445,8 @@ local function updateFrame(event)
     dt = 0.05
   end
 
+  runElapsed = runElapsed + dt
+
   roundTime = roundTime - dt
   if roundTime <= 0 then
     endRound()
@@ -338,6 +454,14 @@ local function updateFrame(event)
   end
 
   level = math.min(MAX_LEVEL, 1 + math.floor(score / LEVEL_SCORE_STEP))
+  if level > lastLoggedLevel then
+    logTrace("level_up", {
+      from = lastLoggedLevel,
+      to = level,
+      score = score
+    })
+    lastLoggedLevel = level
+  end
 
   if overchargeTimer > 0 then
     overchargeTimer = math.max(0, overchargeTimer - dt)
@@ -379,6 +503,9 @@ local function updateFrame(event)
       if entry.type == "spark" then
         combo = 0
         lives = lives - 1
+        logTrace("spark_missed", {
+          lives = lives
+        })
       end
       remove = true
     end
@@ -402,5 +529,6 @@ Runtime:addEventListener("tap", onTap)
 Runtime:addEventListener("key", onKey)
 Runtime:addEventListener("enterFrame", updateFrame)
 
+configureSeedMode()
 setPrompt("Tap to Start", "Drag the catcher. Catch sparks. Avoid shards.")
 updateHud()

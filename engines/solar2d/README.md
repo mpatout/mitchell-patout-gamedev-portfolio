@@ -20,6 +20,12 @@ Solar2D daily build 2025.3721 or newer.
 3. Select **File -> Open Project...** and choose `engines/solar2d`.
 4. The simulator runs `main.lua` automatically.
 
+Deterministic seeded run (for reproducible debugging):
+
+```powershell
+$env:SPARK_CATCH_SEED="424242"
+```
+
 ## Controls
 
 | Input | Effect |
@@ -34,12 +40,15 @@ Solar2D daily build 2025.3721 or newer.
 - Three drop types: safe spark, unstable shard, and overcharge token.
 - Overcharge risk-reward mode: temporary score multiplier and faster spawn rate.
 - Lives, score, combo streak, best-score persistence, and 75-second rounds.
+- Deterministic seed mode via `SPARK_CATCH_SEED`.
+- Run trace export to `spark_catch_latest_run.json` in `system.DocumentsDirectory`.
 
 ## Technical Highlights
 
 - Deterministic update loop using `enterFrame` delta-time progression.
 - Table-backed object pool style lifecycle with explicit cleanup on despawn.
 - Save data persistence through `system.DocumentsDirectory` JSON file.
+- Replay/debug telemetry trace with seed and event stream.
 - No external art/audio dependencies; all primitives are generated at runtime.
 
 ## Performance Snapshot

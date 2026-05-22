@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## [0.2.1] - 2026-05-22
+
+### Added
+
+- Deterministic run support via `SPARK_CATCH_SEED`.
+- Run trace export to `spark_catch_latest_run.json`.
+- Telemetry event logging for catches, misses, level-ups, pause events, and round end.
+- Trace summary helper script `scripts/summarize-trace.ps1`.
+
+### Changed
+
+- README, technical packet, and acceptance tests updated with deterministic debugging workflow.
+
 ## [0.2.0] - 2026-05-22
 
 ### Added

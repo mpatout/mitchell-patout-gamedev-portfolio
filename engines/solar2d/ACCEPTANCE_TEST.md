@@ -38,6 +38,14 @@
 | 4.1 | Finish round with score N. | Best score updates when N exceeds previous best. | |
 | 4.2 | Restart simulator. | Best score persists across session restart. | |
 
+## Section 5: Deterministic Trace
+
+| # | Test | Expected Result | Pass? |
+| --- | --- | --- | --- |
+| 5.1 | Set `SPARK_CATCH_SEED` to a fixed integer and run one full round. | `spark_catch_latest_run.json` is written to DocumentsDirectory. | |
+| 5.2 | Re-run with the same seed. | Early spawn/flow is reproducible for debugging. | |
+| 5.3 | Inspect trace JSON. | Contains seed, duration, score, and non-empty `events` array. | |
+
 ## Exit Criteria
 
 All tests above pass before marking release-ready.

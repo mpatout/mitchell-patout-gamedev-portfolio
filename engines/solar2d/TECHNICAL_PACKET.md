@@ -34,6 +34,15 @@ engines/solar2d/
 | Input model | Drag catcher movement | Mobile-first control with low cognitive load |
 | Risk mechanic | Overcharge window | Adds strategic depth without needing many assets |
 | Persistence | JSON save file in documents dir | Solar2D-native and cross-platform |
+| Reproducibility | Seeded RNG + trace export | Deterministic debugging and run analysis |
+
+## Deterministic Replay Instrumentation
+
+- `SPARK_CATCH_SEED` locks RNG seed for deterministic test runs.
+- When seed is not specified, the game derives a rotating seed per round.
+- Run traces are written to `spark_catch_latest_run.json` in DocumentsDirectory.
+- Trace events include round start/end, catches, misses, level-ups, pause transitions,
+  and overcharge activity.
 
 ## Debugging Notes
 
@@ -45,6 +54,8 @@ engines/solar2d/
 	object table and timers before first spawn.
 - If performance degrades after long runs, ensure off-screen objects are removed
 	and `display.remove` is called for each despawn path.
+- For reproducible bugs, set `SPARK_CATCH_SEED`, run a full round, and summarize
+  telemetry using `engines/solar2d/scripts/summarize-trace.ps1`.
 
 ## Performance Notes
 
@@ -52,9 +63,11 @@ engines/solar2d/
 - All visuals are primitive circles/rectangles, avoiding texture overhead.
 - Spawn-rate acceleration is bounded by a minimum interval, preventing runaway
 	object creation.
+- Trace event volume is capped to avoid oversized run files.
 
 ## Known Limitations
 
 - No audio feedback yet.
 - No object pooling; objects are created/removed directly for simplicity.
 - Native mobile build/export must be done manually in Solar2D tooling.
+- Trace payload is event-sampled and not frame-accurate replay state.

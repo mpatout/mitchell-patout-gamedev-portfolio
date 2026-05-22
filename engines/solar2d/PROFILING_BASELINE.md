@@ -22,3 +22,10 @@
 - FPS should remain near 60 on desktop simulator.
 - Lua memory should remain stable with no unbounded growth.
 - Active object count should stay below 30 in normal play.
+
+## Screenshot Evidence
+
+- Low pressure screenshot path: `docs/portfolio/evidence/profiling/solar2d/low-pressure.png`
+- High pressure screenshot path: `docs/portfolio/evidence/profiling/solar2d/high-pressure.png`
+
+See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requirements.

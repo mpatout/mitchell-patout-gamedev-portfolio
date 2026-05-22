@@ -24,3 +24,10 @@
 - Frame time: < 4 ms at 60 Hz (headroom for mobile).
 - Script self-time: < 0.5 ms (O(16) loop + 25 GUI nodes is trivial).
 - No GC spikes from table allocation in hot path (active_cells is a fixed map).
+
+## Screenshot Evidence
+
+- Low pressure screenshot path: `docs/portfolio/evidence/profiling/defold/low-pressure.png`
+- High pressure screenshot path: `docs/portfolio/evidence/profiling/defold/high-pressure.png`
+
+See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requirements.

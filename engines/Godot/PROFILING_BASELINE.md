@@ -36,6 +36,13 @@ Record each capture with:
 - Largest frame-time spike
 - Notes on perceived stutter and cause
 
+## Screenshot Evidence
+
+- Low pressure screenshot path: `docs/portfolio/evidence/profiling/godot/low-pressure.png`
+- High pressure screenshot path: `docs/portfolio/evidence/profiling/godot/high-pressure.png`
+
+See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requirements.
+
 ## First Capture Status
 
 Pending local Godot editor run.

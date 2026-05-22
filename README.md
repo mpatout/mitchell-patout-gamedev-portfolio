@@ -23,6 +23,7 @@ It is designed for recruiter and reviewer efficiency:
 4. Run Solar2D slice: `engines/solar2d/README.md`
 5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
+7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
 
 ## Engine Snapshot
 

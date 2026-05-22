@@ -35,3 +35,5 @@ Use this checklist before creating a GitHub Release for any engine project.
 - Artifacts can be generated with each engine package script.
 - GitHub releases can be published through `scripts/publish-github-releases.ps1`
 	using a `GITHUB_TOKEN` with repo permissions.
+- Profiling evidence requirements are tracked in `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`.
+- Profile gate can be checked with `scripts/check-profiling-readiness.ps1`.

@@ -24,6 +24,7 @@ It is designed for recruiter and reviewer efficiency:
 5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
+8. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
 
 ## Engine Snapshot
 

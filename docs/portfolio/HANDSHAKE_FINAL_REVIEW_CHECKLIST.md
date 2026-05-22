@@ -46,6 +46,12 @@ Run this checklist right before submitting the Handshake form.
 - [ ] Release notes exist under `docs/portfolio/release-notes/`.
 - [ ] GitHub release pages published (if token available): `scripts/publish-github-releases.ps1`.
 
+## 3.5) Gameplay Media Proof (Month 2 Target)
+
+- [ ] Gameplay evidence index reviewed: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`.
+- [ ] One gameplay clip per active engine saved under `docs/portfolio/evidence/gameplay/`.
+- [ ] Optional gate passes: `scripts/check-gameplay-media-readiness.ps1`.
+
 ## 4) Profiling Proof
 
 - [ ] All baseline docs have no `Pending` values.

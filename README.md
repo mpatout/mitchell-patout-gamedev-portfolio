@@ -15,6 +15,12 @@ It is designed for recruiter and reviewer efficiency:
 - Evidence of architecture, debugging, and performance work
 - Consistent release packaging and documentation quality
 
+## Top Proof Points
+
+1. Shipped multi-engine playable slices (Godot, Defold, Solar2D) with release/tag discipline.
+2. Reproducible debugging workflows (deterministic seeds + trace summaries).
+3. Structured performance proof workflow with explicit profiling gates.
+
 ## Reviewer Quick Path (10 Minutes)
 
 1. Open competency coverage: `docs/portfolio/COMPETENCY_MATRIX.md`
@@ -24,9 +30,10 @@ It is designed for recruiter and reviewer efficiency:
 5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
-8. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
-9. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
-10. Use form response bank: `docs/portfolio/HANDSHAKE_FORM_RESPONSE_BANK.md`
+8. Review gameplay evidence index: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`
+9. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
+10. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
+11. Use form response bank: `docs/portfolio/HANDSHAKE_FORM_RESPONSE_BANK.md`
 
 To execute profiling capture in one pass:
 

@@ -24,6 +24,10 @@ const COMBO_WINDOW_SECONDS := 2.6
 const POWERUP_SPAWN_INTERVAL := 13.0
 const STASIS_DURATION_SECONDS := 4.0
 const SAVE_FILE_PATH := "user://signal_chase_save.json"
+const TRACE_FILE_PATH := "user://signal_chase_latest_run.json"
+const SEED_ENV_VAR := "SIGNAL_CHASE_SEED"
+const INPUT_SAMPLE_INTERVAL_SECONDS := 0.2
+const MAX_TRACE_EVENTS := 900
 
 @onready var score_label: Label = $HUD/Overlay/ScoreLabel
 @onready var timer_label: Label = $HUD/Overlay/TimerLabel
@@ -52,10 +56,17 @@ var powerup_spawn_cooldown := POWERUP_SPAWN_INTERVAL
 var stasis_remaining := 0.0
 var powerup_active := false
 var state := GameState.PLAYING
+var seed_locked := false
+var seed_base := 0
+var run_index := 0
+var current_run_seed := 0
+var run_elapsed := 0.0
+var input_sample_timer := 0.0
+var run_trace_events: Array[Dictionary] = []
 
 
 func _ready() -> void:
-	rng.randomize()
+	_configure_seed_mode()
 	_load_best_score()
 	_restart_round(false)
 
@@ -72,9 +83,11 @@ func _process(delta: float) -> void:
 	if state == GameState.PAUSED:
 		return
 
+	run_elapsed += delta
 	var move_vector := _get_move_vector()
 	player_position += move_vector * PLAYER_SPEED * delta
 	_clamp_player_to_viewport()
+	_sample_input_vector(delta, move_vector)
 
 	hit_invulnerability_remaining = max(hit_invulnerability_remaining - delta, 0.0)
 	combo_timer = max(combo_timer - delta, 0.0)
@@ -93,6 +106,11 @@ func _process(delta: float) -> void:
 		stasis_remaining = STASIS_DURATION_SECONDS
 		time_remaining = min(ROUND_TIME_SECONDS + 20.0, time_remaining + POWERUP_TIME_BONUS)
 		state_label.text = "Stasis core collected. Enemy speed reduced."
+		_log_run_event("powerup_collected", {
+			"x": snapped(player_position.x, 0.01),
+			"y": snapped(player_position.y, 0.01),
+			"time_remaining": snapped(time_remaining, 0.01)
+		})
 
 	if not powerup_active and powerup_spawn_cooldown <= 0.0:
 		_spawn_powerup()
@@ -142,6 +160,7 @@ func _draw() -> void:
 
 
 func _restart_round(from_restart_prompt: bool) -> void:
+	_prepare_round_rng()
 	var viewport_size := get_viewport_rect().size
 	player_position = viewport_size / 2.0
 	time_remaining = ROUND_TIME_SECONDS
@@ -155,13 +174,21 @@ func _restart_round(from_restart_prompt: bool) -> void:
 	powerup_spawn_cooldown = POWERUP_SPAWN_INTERVAL
 	powerup_active = false
 	state = GameState.PLAYING
+	run_elapsed = 0.0
+	input_sample_timer = 0.0
+	run_trace_events.clear()
+	_log_run_event("round_start", {
+		"seed": current_run_seed,
+		"from_prompt": from_restart_prompt,
+		"seed_locked": seed_locked
+	})
 	_pause_label_visibility(false)
 	_rebuild_threat_layout()
 	_spawn_target()
 	if from_restart_prompt:
-		state_label.text = "New run started. Secure fast chains for combo points."
+		state_label.text = "New run started (seed %d). Secure fast chains." % current_run_seed
 	else:
-		state_label.text = "Collect targets, avoid threats, and survive until time expires."
+		state_label.text = "Collect targets, avoid threats, and survive. Seed %d." % current_run_seed
 	_update_hud()
 	queue_redraw()
 
@@ -189,7 +216,7 @@ func _spawn_target() -> void:
 			continue
 
 		target_position = candidate
-			return
+		return
 
 	target_position = viewport_size / 2.0
 
@@ -256,6 +283,14 @@ func _collect_target() -> void:
 		best_score = score
 		_save_best_score()
 
+	_log_run_event("target_collected", {
+		"score": score,
+		"combo": combo_count,
+		"time_remaining": snapped(time_remaining, 0.01),
+		"x": snapped(target_position.x, 0.01),
+		"y": snapped(target_position.y, 0.01)
+	})
+
 	state_label.text = "Target secured (+%d). Keep chain alive." % points
 
 
@@ -263,8 +298,15 @@ func _update_difficulty_from_score() -> void:
 	var next_level := 1 + int(score / 6)
 	next_level = min(next_level, 8)
 	if next_level != level:
+		var previous_level := level
 		level = next_level
 		_rebuild_threat_layout()
+		_log_run_event("level_up", {
+			"from": previous_level,
+			"to": level,
+			"score": score,
+			"time_remaining": snapped(time_remaining, 0.01)
+		})
 		state_label.text = "Threat level %d engaged." % level
 
 
@@ -343,17 +385,36 @@ func _apply_hit(message: String) -> void:
 	hit_invulnerability_remaining = HIT_INVULNERABILITY_SECONDS
 	combo_count = 0
 	combo_timer = 0.0
+	_log_run_event("player_hit", {
+		"reason": message,
+		"lives": max(lives, 0),
+		"time_remaining": snapped(time_remaining, 0.01),
+		"x": snapped(player_position.x, 0.01),
+		"y": snapped(player_position.y, 0.01)
+	})
 	state_label.text = "%s Lives remaining: %d" % [message, max(lives, 0)]
 
 
 func _spawn_powerup() -> void:
 	powerup_active = true
 	powerup_position = _get_safe_spawn_point(120.0)
+	_log_run_event("powerup_spawned", {
+		"x": snapped(powerup_position.x, 0.01),
+		"y": snapped(powerup_position.y, 0.01),
+		"time_remaining": snapped(time_remaining, 0.01)
+	})
 
 
 func _end_round(message: String) -> void:
 	state = GameState.ROUND_OVER
 	_pause_label_visibility(false)
+	_log_run_event("round_end", {
+		"reason": message,
+		"score": score,
+		"lives": max(lives, 0),
+		"time_remaining": snapped(time_remaining, 0.01)
+	})
+	_write_run_trace(message)
 	state_label.text = "%s Final score: %d" % [message, score]
 
 
@@ -380,3 +441,72 @@ func _save_best_score() -> void:
 		return
 
 	file.store_string(JSON.stringify({"best_score": best_score}))
+
+
+func _configure_seed_mode() -> void:
+	var env_seed := OS.get_environment(SEED_ENV_VAR)
+	if env_seed.strip_edges() != "":
+		seed_base = int(env_seed)
+		seed_locked = true
+	else:
+		seed_base = int(Time.get_unix_time_from_system())
+		seed_locked = false
+
+
+func _prepare_round_rng() -> void:
+	if seed_locked:
+		current_run_seed = seed_base
+	else:
+		current_run_seed = seed_base + run_index * 7919
+	run_index += 1
+	rng.seed = current_run_seed
+
+
+func _sample_input_vector(delta: float, move_vector: Vector2) -> void:
+	input_sample_timer += delta
+	if input_sample_timer < INPUT_SAMPLE_INTERVAL_SECONDS:
+		return
+
+	input_sample_timer = 0.0
+	_log_run_event("input_sample", {
+		"x": snapped(move_vector.x, 0.001),
+		"y": snapped(move_vector.y, 0.001),
+		"player_x": snapped(player_position.x, 0.01),
+		"player_y": snapped(player_position.y, 0.01)
+	})
+
+
+func _log_run_event(event_type: String, payload: Dictionary = {}) -> void:
+	if run_trace_events.size() >= MAX_TRACE_EVENTS:
+		return
+
+	var event: Dictionary = {
+		"t": snapped(run_elapsed, 0.001),
+		"type": event_type
+	}
+	for key in payload.keys():
+		event[key] = payload[key]
+	run_trace_events.append(event)
+
+
+func _write_run_trace(end_reason: String) -> void:
+	var file := FileAccess.open(TRACE_FILE_PATH, FileAccess.WRITE)
+	if file == null:
+		return
+
+	var trace_payload := {
+		"engine": "Godot",
+		"project": "Signal Chase",
+		"seed": current_run_seed,
+		"seed_locked": seed_locked,
+		"run_index": run_index,
+		"duration_seconds": snapped(run_elapsed, 0.001),
+		"score": score,
+		"best_score": best_score,
+		"level": level,
+		"lives": max(lives, 0),
+		"end_reason": end_reason,
+		"events": run_trace_events
+	}
+
+	file.store_string(JSON.stringify(trace_payload, "\t"))

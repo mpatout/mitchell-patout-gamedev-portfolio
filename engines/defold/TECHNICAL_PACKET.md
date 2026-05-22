@@ -106,15 +106,3 @@ end
 - No export preset automation. HTML5/mobile export requires Defold Editor.
 - `sys.get_save_file` on HTML5 resolves to emscripten FS; data persists only
   within browser origin.
-
-## Debugging Notes
-
-TBD
-
-## Performance Notes
-
-TBD
-
-## Known Limitations
-
-TBD

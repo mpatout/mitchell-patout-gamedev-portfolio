@@ -1,27 +1,31 @@
 # Implementation Status
 
-Last updated: 2026-05-04
+Last updated: 2026-05-22
 
 ## Plan Progress
 
 - Phase 0: Completed
 - Phase 1: Completed
 - Phase 2 (Godot flagship): In progress, production-ready slice achieved
-- Phase 2 (Defold/Solar2D/Panda3D/Stride): Not started
+- Phase 2 (Defold): Completed production-ready baseline slice
+- Phase 2 (Solar2D): In progress, playable vertical-slice baseline implemented
+- Phase 2 (Panda3D/Stride): Not started
 - Phase 3+: Not started
 
 ## Engine Status
 
 | Engine | Status | Notes |
 | --- | --- | --- |
-| Godot | Production hardening in progress | Core systems and quality gates in place; profiler capture and public GitHub release still pending |
-| Defold | Pending | Next implementation target |
-| Solar2D | Pending | Planned after Defold baseline |
+| Godot | Production hardening in progress | Core systems, quality gates, deterministic seed mode, and replay trace export are in place; profiler capture and public GitHub release still pending |
+| Defold | Production-ready baseline complete | Gameplay, docs, acceptance test, profiling template, and release scripts are in place; profiling capture and public release publication pending |
+| Solar2D | Vertical slice in progress | Core playable loop and portfolio docs implemented; profiling capture and release packaging pending |
 | Panda3D | Pending | Planned after Solar2D baseline |
 | Stride | Pending | Planned after Panda3D baseline |
 
 ## Current Readiness Summary
 
 - Godot has production gameplay systems, release packaging, and acceptance test definitions.
-- Final blockers: profiler data capture on a machine with Godot installed, release publishing to public GitHub repository.
-- Portfolio repository has local git history but is not pushed to GitHub yet.
+- Godot now includes deterministic seeded runs and replay telemetry trace export for reproducible debugging.
+- Defold has a complete baseline implementation with runnable gameplay and full documentation set.
+- Solar2D has transitioned from placeholder docs to a runnable baseline with deterministic controls and documented scope.
+- Final blockers across engines: profiler data capture and tagged public GitHub releases.

@@ -1,5 +1,18 @@
 ﻿# Changelog
 
+## [0.3.2] - 2026-05-22
+
+### Added
+
+- Deterministic run support through `SIGNAL_CHASE_SEED` environment variable.
+- Replay trace export to `user://signal_chase_latest_run.json` with sampled input and gameplay events.
+- Telemetry event logging for target captures, hits, level-ups, powerups, and round end.
+
+### Changed
+
+- Updated technical packet and README with deterministic debugging workflow.
+- Expanded acceptance tests with seeded replay verification steps.
+
 ## [0.3.1] - 2026-05-04
 
 ### Added

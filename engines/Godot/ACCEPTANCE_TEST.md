@@ -29,6 +29,13 @@ Use this checklist before creating any submission release.
 - [ ] Restart game and verify best score persists.
 - [ ] If persistence fails, gameplay still continues without crash.
 
+## Deterministic Replay Tests
+
+- [ ] Launch with `SIGNAL_CHASE_SEED` set to a fixed integer value.
+- [ ] Complete one round and verify `user://signal_chase_latest_run.json` is written.
+- [ ] Re-launch with the same seed and verify early spawn pattern is reproducible.
+- [ ] Confirm trace file contains seed, duration, score, and non-empty `events` array.
+
 ## Stability Tests
 
 - [ ] Run 10 consecutive rounds without crash.
@@ -41,3 +48,4 @@ Use this checklist before creating any submission release.
 - [ ] `PROFILING_BASELINE.md` contains measured data.
 - [ ] Release artifact generated via `package-release.ps1`.
 - [ ] Changelog and release notes are synchronized.
+- [ ] Deterministic replay trace generated and inspected for key events.

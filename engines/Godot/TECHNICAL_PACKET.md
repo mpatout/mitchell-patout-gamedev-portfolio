@@ -6,6 +6,7 @@
 - `main.gd` centralizes simulation through a finite game state model.
 - Threat systems are represented as arrays of vectors for predictable update order.
 - Save system writes best-score metadata to `user://signal_chase_save.json`.
+- Replay trace writer exports per-run telemetry to `user://signal_chase_latest_run.json`.
 
 ## Key Decisions
 
@@ -14,6 +15,22 @@
 - Keep run-path deterministic (`res://scenes/Main.tscn`) to simplify reviewer onboarding.
 - Scale complexity through data constants instead of scene sprawl for easier balancing.
 - Separate collision checks by domain (target, enemy, hazard, powerup) for maintainability.
+- Support deterministic seeded runs with `SIGNAL_CHASE_SEED` for reproducible bug reports.
+- Capture lightweight telemetry events to create replay-ready run traces.
+
+## Deterministic Replay Instrumentation
+
+- `SIGNAL_CHASE_SEED` environment variable locks RNG seed for deterministic runs.
+- Default mode rotates seeds per run (`seed_base + run_index * 7919`) to preserve
+	gameplay variety outside debugging sessions.
+- Input vectors are sampled every 0.2s and appended to the run trace.
+- Major events are logged with timestamp and state payload:
+	- target collection
+	- powerup spawn/collection
+	- player hits
+	- level transitions
+	- round end
+- Trace payload includes seed, score, duration, level, and full event list.
 
 ## Balance Notes
 
@@ -29,12 +46,14 @@
 - Round state logic gates simulation while paused or after round over.
 - Damage events are debounced with invulnerability timers to avoid multi-hit frame spikes.
 - Pause/resume logic is centralized and testable through the acceptance checklist.
+- Deterministic mode allows reproducing threat and target spawn sequences exactly.
 
 ## Performance Notes
 
 - Current scene remains draw-light (primitives only) with bounded entity counts.
 - Enemy and hazard counts are level-capped to protect frame consistency.
 - Profiling capture process is documented in `PROFILING_BASELINE.md`.
+- Replay event count is bounded (`MAX_TRACE_EVENTS`) to avoid runaway trace files.
 
 ## Known Limitations
 
@@ -42,3 +61,4 @@
 - Audio and settings menu are deferred to next polish pass.
 - Export presets still need to be configured inside Godot editor before binary releases.
 - Save persistence defaults to score 0 if file I/O fails; gameplay remains functional.
+- Replay traces currently store sampled inputs/events, not full per-frame snapshots.

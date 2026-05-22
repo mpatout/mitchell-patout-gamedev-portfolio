@@ -28,6 +28,12 @@ From repository root:
 godot4 --path engines/Godot
 ```
 
+Deterministic seeded run (for reproducible debugging):
+
+```powershell
+$env:SIGNAL_CHASE_SEED="424242"; godot4 --path engines/Godot
+```
+
 ## Controls
 
 - Move: Arrow keys or WASD
@@ -42,6 +48,8 @@ godot4 --path engines/Godot
 - Life system with short invulnerability after damage
 - Stasis powerup that slows enemy movement and grants bonus time
 - Persistent best-score save in `user://signal_chase_save.json`
+- Deterministic seed mode via `SIGNAL_CHASE_SEED`
+- Run trace export to `user://signal_chase_latest_run.json`
 
 ## Vertical Slice Goals
 
@@ -56,6 +64,7 @@ godot4 --path engines/Godot
 - Difficulty controller that scales enemy/hazard pressure by score milestones
 - Gameplay persistence for best-score continuity between sessions
 - HUD telemetry for score/time/lives/level/combo/best state
+- Replay telemetry events for input samples, hits, level-ups, and round-end state
 
 ## Performance Snapshot
 

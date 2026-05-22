@@ -74,6 +74,19 @@ Pull requests must pass:
 Distribution is done through GitHub Releases with consistent artifact naming and versioning.
 See `docs/portfolio/RELEASE_CHECKLIST.md`.
 
+Current tag milestones:
+
+- `godot-signal-chase-v0.3.2`
+- `defold-pulse-grid-v0.1.0`
+- `solar2d-spark-catch-v0.2.0`
+
+To publish release pages with uploaded artifacts, run:
+
+```powershell
+$env:GITHUB_TOKEN="<token>"
+./scripts/publish-github-releases.ps1 -Repository "mpatout/mitchell-patout-gamedev-portfolio"
+```
+
 ## License
 
 Code and original assets are repository-specific. Third-party assets must be documented in each project's `ASSET_PROVENANCE.md`.

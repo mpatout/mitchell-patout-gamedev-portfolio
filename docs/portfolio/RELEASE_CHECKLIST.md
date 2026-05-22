@@ -28,3 +28,10 @@ Use this checklist before creating a GitHub Release for any engine project.
 - [ ] Tag pushed and verified
 - [ ] Release downloadable and integrity checked
 - [ ] Follow-up issues created for deferred fixes
+
+## Repository Helpers
+
+- Release notes templates live under `docs/portfolio/release-notes/`.
+- Artifacts can be generated with each engine package script.
+- GitHub releases can be published through `scripts/publish-github-releases.ps1`
+	using a `GITHUB_TOKEN` with repo permissions.

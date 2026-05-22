@@ -1,4 +1,4 @@
-# Pulse Grid � Defold
+# Pulse Grid - Defold
 
 ## Overview
 

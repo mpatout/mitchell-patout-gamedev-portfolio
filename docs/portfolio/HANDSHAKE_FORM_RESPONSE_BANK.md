@@ -36,7 +36,7 @@ Use this as a copy/paste answer bank for the Handshake screening form.
 
 - Pick your truthful bracket.
 - Optional support sentence:
-  - `Built Pulse Grid in Defold using GUI-first architecture, persistence, acceptance tests, and packaging/quality scripts.`
+  - `Built Pulse Grid in Defold using GUI-first architecture, persistence, offline-first leaderboard sync hooks, acceptance tests, and packaging/quality scripts.`
 
 ### Solar2D experience bracket
 

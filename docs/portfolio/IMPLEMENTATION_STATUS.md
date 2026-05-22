@@ -7,7 +7,7 @@ Last updated: 2026-05-22
 - Phase 0: Completed
 - Phase 1: Completed
 - Phase 2 (Godot flagship): In progress, production-ready slice achieved
-- Phase 2 (Defold): Completed production-ready baseline slice
+- Phase 2 (Defold): Completed advanced slice with offline-first leaderboard sync
 - Phase 2 (Solar2D): In progress, playable vertical-slice baseline implemented
 - Phase 2 (Panda3D/Stride): Not started
 - Phase 3+: Not started
@@ -17,7 +17,7 @@ Last updated: 2026-05-22
 | Engine | Status | Notes |
 | --- | --- | --- |
 | Godot | Production hardening in progress | Core systems, dynamic pressure director, deterministic seed mode, and replay trace export are in place; profiler capture and public GitHub release still pending |
-| Defold | Production-ready baseline complete | Gameplay, docs, acceptance test, profiling template, and release scripts are in place; profiling capture and public release publication pending |
+| Defold | Advanced slice complete | Gameplay now includes leaderboard cache + offline sync queue hooks; docs, acceptance tests, profiling template, and release scripts are in place; profiling capture and public release publication pending |
 | Solar2D | Vertical slice in progress | Core playable loop and portfolio docs implemented; profiling capture and release packaging pending |
 | Panda3D | Pending | Planned after Solar2D baseline |
 | Stride | Pending | Planned after Panda3D baseline |

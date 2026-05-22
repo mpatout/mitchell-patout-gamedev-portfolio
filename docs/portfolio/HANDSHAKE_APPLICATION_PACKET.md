@@ -10,7 +10,7 @@ Use this packet to answer the screening form with concrete, verifiable evidence.
 
 - Multi-engine implementation in active progress:
   - Godot (Signal Chase) with adaptive difficulty, deterministic seed support, and replay trace instrumentation.
-  - Defold (Pulse Grid) production baseline with release + quality scripts.
+  - Defold (Pulse Grid) advanced slice with offline-first leaderboard sync and release + quality scripts.
   - Solar2D (Spark Catch) playable vertical slice with mobile-first control model.
 - Reproducible engineering process:
   - Acceptance tests per engine.
@@ -45,7 +45,7 @@ For copy/paste-ready field responses, use:
 
 - Select truthful bracket.
 - Support statement (optional):
-  - "Built Pulse Grid in Defold with GUI-driven architecture, persistence, and release quality gates."
+  - "Built Pulse Grid in Defold with GUI-driven architecture, persistence, offline-first leaderboard sync hooks, and release quality gates."
 
 ### How many years of experience do you have with Solar 2D?
 
@@ -79,7 +79,7 @@ For copy/paste-ready field responses, use:
 - Confirm latest commits are on `main`.
 - Confirm tags exist:
   - `godot-signal-chase-v0.3.2`
-  - `defold-pulse-grid-v0.1.0`
+  - `defold-pulse-grid-v0.2.0`
   - `solar2d-spark-catch-v0.2.1`
 - If token available, publish release pages with `scripts/publish-github-releases.ps1`.
 - Fill profiling baseline logs and add screenshots, then run `scripts/check-profiling-readiness.ps1`.

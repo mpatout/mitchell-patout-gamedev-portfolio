@@ -46,7 +46,7 @@ To execute profiling capture in one pass:
 | Engine | Project | Current State | Fast Evidence |
 | --- | --- | --- | --- |
 | Godot | Signal Chase | Production hardening in progress | `engines/Godot/scripts/main.gd`, `engines/Godot/TECHNICAL_PACKET.md`, `engines/Godot/ACCEPTANCE_TEST.md` |
-| Defold | Pulse Grid | Production-ready baseline complete | `engines/defold/main/game.gui_script`, `engines/defold/TECHNICAL_PACKET.md`, `engines/defold/ACCEPTANCE_TEST.md` |
+| Defold | Pulse Grid | Advanced slice complete (offline-first leaderboard sync) | `engines/defold/main/game.gui_script`, `engines/defold/TECHNICAL_PACKET.md`, `engines/defold/ACCEPTANCE_TEST.md` |
 | Solar2D | Spark Catch | Playable vertical slice in progress | `engines/solar2d/main.lua`, `engines/solar2d/TECHNICAL_PACKET.md`, `engines/solar2d/ACCEPTANCE_TEST.md` |
 | Panda3D | TBD | Planned | `engines/panda3d/PROJECT_SCOPE.md` |
 | Stride | TBD | Planned | `engines/stride/PROJECT_SCOPE.md` |
@@ -96,7 +96,7 @@ See `docs/portfolio/RELEASE_CHECKLIST.md`.
 Current tag milestones:
 
 - `godot-signal-chase-v0.3.2`
-- `defold-pulse-grid-v0.1.0`
+- `defold-pulse-grid-v0.2.0`
 - `solar2d-spark-catch-v0.2.1`
 
 To publish release pages with uploaded artifacts, run:

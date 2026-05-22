@@ -22,6 +22,7 @@ It is designed for recruiter and reviewer efficiency:
 3. Run Defold slice: `engines/defold/README.md`
 4. Run Solar2D slice: `engines/solar2d/README.md`
 5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
+6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 
 ## Engine Snapshot
 
@@ -43,6 +44,7 @@ It is designed for recruiter and reviewer efficiency:
 Portfolio execution progress is tracked in `docs/portfolio/IMPLEMENTATION_STATUS.md`.
 
 Cross-engine architecture snapshots are tracked in `docs/standards/ARCHITECTURE_REFERENCE.md`.
+Deterministic replay trace analysis for Godot is supported by `engines/Godot/scripts/summarize-trace.ps1`.
 
 ## Repository Layout
 

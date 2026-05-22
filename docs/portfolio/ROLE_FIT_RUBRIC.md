@@ -33,6 +33,7 @@ A project is considered portfolio-ready when all required artifacts exist, quick
 - Godot: runnable, documented, acceptance-tested, deterministic seed + replay trace instrumentation.
 - Defold: runnable, documented, acceptance-tested, release scripts and quality gate present.
 - Solar2D: runnable vertical slice, documented, acceptance-tested, release scripts and quality gate present.
+- Debugging workflow: reproducible case-study path documented in `docs/portfolio/DEBUGGING_CASE_STUDIES.md`.
 - Panda3D/Stride: planned only; no runnable implementation yet.
 
 ## Remaining Gaps For Reviewer Confidence

@@ -25,6 +25,7 @@ It is designed for recruiter and reviewer efficiency:
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
 8. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
+9. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
 
 ## Engine Snapshot
 
@@ -89,6 +90,12 @@ To publish release pages with uploaded artifacts, run:
 ```powershell
 $env:GITHUB_TOKEN="<token>"
 ./scripts/publish-github-releases.ps1 -Repository "mpatout/mitchell-patout-gamedev-portfolio"
+```
+
+Before form submission, run:
+
+```powershell
+./scripts/run-handshake-preflight.ps1
 ```
 
 ## License

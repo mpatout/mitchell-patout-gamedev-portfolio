@@ -79,3 +79,5 @@ Use this packet to answer the screening form with concrete, verifiable evidence.
   - `solar2d-spark-catch-v0.2.0`
 - If token available, publish release pages with `scripts/publish-github-releases.ps1`.
 - Fill profiling baseline logs and add screenshots, then run `scripts/check-profiling-readiness.ps1`.
+- Run full final gate: `scripts/run-handshake-preflight.ps1`.
+- Optionally review step-by-step checklist: `docs/portfolio/HANDSHAKE_FINAL_REVIEW_CHECKLIST.md`.

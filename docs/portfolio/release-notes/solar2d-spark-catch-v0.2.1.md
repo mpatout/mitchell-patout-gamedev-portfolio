@@ -19,6 +19,6 @@ Deterministic debugging and telemetry instrumentation update for Spark Catch.
 
 ## Known Issues
 
-- Audio is not implemented.
+- At the v0.2.1 milestone, audio was not yet implemented; the current main branch now includes a lightweight audio layer.
 - Native mobile export/signing is not automated in repository scripts.
 - Trace is event-sampled and not per-frame full-state replay.

@@ -19,6 +19,6 @@ Production-hardening update that adds reproducible debugging support and adaptiv
 
 ## Known Issues
 
-- Audio is not implemented.
+- At the v0.3.2 milestone, audio was not yet implemented; the current main branch now includes a lightweight audio layer.
 - Export presets for native binaries are not yet configured.
 - Replay trace stores sampled event telemetry, not per-frame full-state snapshots.

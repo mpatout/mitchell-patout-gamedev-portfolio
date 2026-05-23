@@ -19,6 +19,6 @@ Advanced Defold milestone release focused on leaderboard depth and offline relia
 
 ## Known Issues
 
-- Audio is not implemented.
+- At the v0.2.0 milestone, audio was not yet implemented; the current main branch now includes a lightweight audio layer.
 - HTML5/mobile export pipeline remains manual.
 - Remote sync endpoint is not configured by default (local mode is expected).

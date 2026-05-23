@@ -8,6 +8,9 @@ This index tracks lightweight gameplay media for recruiter review speed.
 - One optional GIF for quick inline preview.
 - Link or note in release notes where applicable.
 
+Current repository state includes provisional placeholder clips for gate coverage;
+replace each with final captured gameplay footage before final external submission.
+
 ## Suggested Artifact Paths
 
 | Engine | Primary Clip | Optional GIF |

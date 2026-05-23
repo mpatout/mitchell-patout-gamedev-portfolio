@@ -1,5 +1,6 @@
 param(
-    [switch]$RequireGameplayMedia
+    [switch]$RequireGameplayMedia,
+    [switch]$SkipGameplayMedia
 )
 
 Set-StrictMode -Version Latest
@@ -81,8 +82,8 @@ if ([string]::IsNullOrWhiteSpace($env:GITHUB_TOKEN)) {
     Ok "GITHUB_TOKEN is present"
 }
 
-# 6) Optional gameplay media gate
-if ($RequireGameplayMedia) {
+# 6) Gameplay media gate (enforced by default)
+if (-not $SkipGameplayMedia) {
     ./scripts/check-gameplay-media-readiness.ps1 | Out-Null
     if ($LASTEXITCODE -eq 0) {
         Ok "Gameplay media readiness passed"
@@ -90,7 +91,7 @@ if ($RequireGameplayMedia) {
         Fail "Gameplay media readiness failed"
     }
 } else {
-    Warn "Gameplay media gate skipped (pass -RequireGameplayMedia to enforce)"
+    Warn "Gameplay media gate skipped (pass without -SkipGameplayMedia to enforce)"
 }
 
 Write-Host ""

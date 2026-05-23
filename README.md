@@ -17,7 +17,7 @@ It is designed for recruiter and reviewer efficiency:
 
 ## Top Proof Points
 
-1. Shipped multi-engine playable slices (Godot, Defold, Solar2D) with release/tag discipline.
+1. Shipped playable slices across five engines (Godot, Defold, Solar2D, Panda3D, Stride) with release/tag discipline.
 2. Reproducible debugging workflows (deterministic seeds + trace summaries).
 3. Structured performance proof workflow with explicit profiling gates.
 

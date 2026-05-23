@@ -27,10 +27,12 @@ replace each with final captured gameplay footage before final external submissi
 
 ## Optional Gate
 
-Run optional gameplay media check:
+Run gameplay media check:
 
 ```powershell
 ./scripts/check-gameplay-media-readiness.ps1
 ```
 
-Use this as a Month 2 quality target. It is not required for current submission preflight unless explicitly enabled.
+This gate is enforced by default in `scripts/run-portfolio-preflight.ps1` unless `-SkipGameplayMedia` is passed.
+
+Current repository clips satisfy path-based gate checks but are provisional placeholders and should be replaced with real gameplay captures before external submission.

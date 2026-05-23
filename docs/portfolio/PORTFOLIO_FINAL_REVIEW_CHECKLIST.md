@@ -64,7 +64,7 @@ Run this checklist before sharing the repository with external reviewers.
 
 ## 4) Profiling Proof
 
-- [ ] All baseline docs have no placeholder `Pending` values.
+- [ ] All baseline docs have no placeholder values.
 - [ ] Required screenshots exist under `docs/portfolio/evidence/profiling/`.
 - [ ] Profiling gate passes: `scripts/check-profiling-readiness.ps1`.
 - [ ] Optional accelerator used: `scripts/run-profiling-capture-sprint.ps1`.

@@ -14,7 +14,7 @@ Playable Solar2D vertical slice with mobile-first input and risk-reward scoring.
 ## Performance Notes
 
 - Primitive-only visuals keep render overhead low.
-- At this release milestone, runtime profiling capture was pending; current profiling evidence is available in docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
+- At this release milestone, runtime profiling capture was not yet recorded; current profiling evidence is available in docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ## Known Issues
 

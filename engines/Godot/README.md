@@ -80,7 +80,7 @@ Run and record pre-release checks in [ACCEPTANCE_TEST.md](ACCEPTANCE_TEST.md).
 ## Known Limitations
 
 - No exported binaries yet (editor/CLI run supported)
-- Single gameplay mode currently; secondary modes pending
+- Single gameplay mode currently; secondary modes are planned in future milestones
 
 ## Release Operations
 

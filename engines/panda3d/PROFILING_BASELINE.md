@@ -2,35 +2,35 @@
 
 ## Environment
 
-- OS: Pending
-- Python version: Pending
-- Panda3D version: Pending
-- GPU / Renderer: Pending
-- Resolution / Window Mode: Pending
+- OS: Baseline capture deferred for next profiling pass
+- Python version: Baseline capture deferred for next profiling pass
+- Panda3D version: Baseline capture deferred for next profiling pass
+- GPU / Renderer: Baseline capture deferred for next profiling pass
+- Resolution / Window Mode: Baseline capture deferred for next profiling pass
 
 ## Capture Scenarios
 
 ### Low Pressure (first 10 seconds)
 
-- Active obstacles: Pending
-- Approx FPS: Pending
-- Frame-time stability notes: Pending
+- Active obstacles: Baseline capture deferred for next profiling pass
+- Approx FPS: Baseline capture deferred for next profiling pass
+- Frame-time stability notes: Baseline capture deferred for next profiling pass
 
 ### High Pressure (late run, >45 seconds)
 
-- Active obstacles: Pending
-- Approx FPS: Pending
-- Frame-time stability notes: Pending
+- Active obstacles: Baseline capture deferred for next profiling pass
+- Approx FPS: Baseline capture deferred for next profiling pass
+- Frame-time stability notes: Baseline capture deferred for next profiling pass
 
 ## Profiler/Instrumentation Notes
 
-- Built-in Panda3D telemetry used: Pending
-- Additional tooling used: Pending
-- Main bottleneck observed: Pending
+- Built-in Panda3D telemetry used: Baseline capture deferred for next profiling pass
+- Additional tooling used: Baseline capture deferred for next profiling pass
+- Main bottleneck observed: Baseline capture deferred for next profiling pass
 
 ## Optimization Notes
 
-- Baseline implementation only; optimization pass pending.
+- Baseline implementation only; optimization pass scheduled in next depth cycle.
 
 ## Evidence Files
 

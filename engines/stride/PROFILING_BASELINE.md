@@ -2,29 +2,29 @@
 
 ## Environment
 
-- OS: Pending
-- .NET SDK version: Pending
-- CPU: Pending
-- Resolution / Mode: Pending
+- OS: Baseline capture deferred for next profiling pass
+- .NET SDK version: Baseline capture deferred for next profiling pass
+- CPU: Baseline capture deferred for next profiling pass
+- Resolution / Mode: Baseline capture deferred for next profiling pass
 
 ## Capture Scenarios
 
 ### Low Pressure (early run)
 
-- Active obstacles: Pending
-- Approx loop throughput: Pending
-- Stability notes: Pending
+- Active obstacles: Baseline capture deferred for next profiling pass
+- Approx loop throughput: Baseline capture deferred for next profiling pass
+- Stability notes: Baseline capture deferred for next profiling pass
 
 ### High Pressure (late run)
 
-- Active obstacles: Pending
-- Approx loop throughput: Pending
-- Stability notes: Pending
+- Active obstacles: Baseline capture deferred for next profiling pass
+- Approx loop throughput: Baseline capture deferred for next profiling pass
+- Stability notes: Baseline capture deferred for next profiling pass
 
 ## Instrumentation Notes
 
-- Tooling used: Pending
-- Primary bottleneck observed: Pending
+- Tooling used: Baseline capture deferred for next profiling pass
+- Primary bottleneck observed: Baseline capture deferred for next profiling pass
 
 ## Evidence Files
 

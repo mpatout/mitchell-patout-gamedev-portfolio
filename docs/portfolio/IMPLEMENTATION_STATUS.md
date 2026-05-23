@@ -11,7 +11,7 @@ Last updated: 2026-05-22
 - Phase 2 (Solar2D): Completed playable vertical-slice baseline
 - Phase 2 (Panda3D): Completed playable vertical-slice baseline
 - Phase 2 (Stride): Completed baseline simulation slice
-- Phase 3+: In progress (portfolio hardening and evidence enrichment)
+- Phase 3+: Ongoing portfolio hardening and evidence enrichment
 
 ## Engine Status
 

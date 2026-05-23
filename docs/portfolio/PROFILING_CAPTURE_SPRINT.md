@@ -4,7 +4,7 @@ Use this guide to clear all remaining profiling blockers in a single focused ses
 
 ## Goal
 
-- Replace all `Pending` values in profiling baselines.
+- Replace all placeholder values in profiling baselines.
 - Capture required low/high pressure screenshots for each active engine.
 - Pass `scripts/check-profiling-readiness.ps1`.
 

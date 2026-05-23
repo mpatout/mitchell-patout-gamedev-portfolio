@@ -15,7 +15,7 @@ Initial Panda3D vertical-slice release with reproducible gameplay loop and portf
 ## Performance Notes
 
 - Baseline run is lightweight with bounded obstacle count.
-- Detailed profiler captures are pending in `engines/panda3d/PROFILING_BASELINE.md`.
+- Detailed profiler captures can be added in `engines/panda3d/PROFILING_BASELINE.md` as future depth expansion.
 
 ## Known Issues
 

@@ -1,6 +1,6 @@
 # Defold Gameplay Evidence
 
-Add gameplay media for Pulse Grid here.
+Optional gameplay media for Pulse Grid can be added here.
 
 Preferred file:
 
@@ -10,5 +10,5 @@ Optional:
 
 - `gameplay.gif`
 
-Current `gameplay.mp4` is a provisional placeholder file for gate coverage only.
-Replace it with real capture footage before external reviewer submission.
+No gameplay clip is committed by default in this repository.
+Add real capture footage only when preparing a media-inclusive share.

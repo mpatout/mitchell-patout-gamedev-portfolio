@@ -12,6 +12,5 @@ Use this matrix to track which project proves which hiring signal.
 
 ## Usage
 
-- Replace `TBD` with final demo names.
-- Replace `Planned` with concise evidence links once artifacts exist.
-- Keep one row per engine in v1.
+- Keep one row per engine.
+- Update evidence links when new milestones ship.

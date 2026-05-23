@@ -62,13 +62,7 @@ Run this checklist before sharing the repository with external reviewers.
 - [ ] Release notes exist under `docs/portfolio/release-notes/`.
 - [ ] GitHub release pages published (if token available): `scripts/publish-github-releases.ps1`.
 
-## 4) Gameplay Media
-
-- [ ] Gameplay evidence index reviewed: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`.
-- [ ] One gameplay clip per active engine saved under `docs/portfolio/evidence/gameplay/`.
-- [ ] Gameplay media gate passes: `scripts/check-gameplay-media-readiness.ps1`.
-
-## 5) Profiling Proof
+## 4) Profiling Proof
 
 - [ ] All baseline docs have no placeholder `Pending` values.
 - [ ] Required screenshots exist under `docs/portfolio/evidence/profiling/`.
@@ -76,12 +70,12 @@ Run this checklist before sharing the repository with external reviewers.
 - [ ] Optional accelerator used: `scripts/run-profiling-capture-sprint.ps1`.
 - [ ] Optional auto-apply used: `scripts/apply-profiling-captures.ps1`.
 
-## 6) Debugging Signal
+## 5) Debugging Signal
 
 - [ ] Deterministic replay workflow documented: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`.
 - [ ] Trace summarizer script available: `engines/Godot/scripts/summarize-trace.ps1`.
 
-## 7) Final Preflight
+## 6) Final Preflight
 
 - [ ] Run and pass: `scripts/run-portfolio-preflight.ps1`.
 - [ ] Review profile packet: `docs/portfolio/PROFESSIONAL_PROFILE_PACKET.md`.

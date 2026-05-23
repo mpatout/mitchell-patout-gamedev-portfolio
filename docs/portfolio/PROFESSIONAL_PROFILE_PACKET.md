@@ -37,7 +37,6 @@ Use this as a short written intro when needed:
 - Current status: `docs/portfolio/IMPLEMENTATION_STATUS.md`
 - Debugging process: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 - Profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
-- Gameplay evidence index: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`
 
 ## Final Quality Checklist
 

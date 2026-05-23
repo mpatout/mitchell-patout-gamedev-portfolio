@@ -30,10 +30,9 @@ It is designed for recruiter and reviewer efficiency:
 5. Review implementation progress: `docs/portfolio/IMPLEMENTATION_STATUS.md`
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
-8. Review gameplay evidence index: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`
-9. Review professional profile packet: `docs/portfolio/PROFESSIONAL_PROFILE_PACKET.md`
-10. Run portfolio preflight: `scripts/run-portfolio-preflight.ps1`
-11. Review summary snippets: `docs/portfolio/PROFESSIONAL_SUMMARY_BANK.md`
+8. Review professional profile packet: `docs/portfolio/PROFESSIONAL_PROFILE_PACKET.md`
+9. Run portfolio preflight: `scripts/run-portfolio-preflight.ps1`
+10. Review summary snippets: `docs/portfolio/PROFESSIONAL_SUMMARY_BANK.md`
 
 To execute profiling capture in one pass:
 

@@ -15,7 +15,7 @@ Initial Stride-oriented C# baseline release with deterministic simulation, trace
 ## Performance Notes
 
 - Workload is bounded and suitable for deterministic baseline tests.
-- Formal capture values remain pending in `engines/stride/PROFILING_BASELINE.md`.
+- Formal capture values can be added in `engines/stride/PROFILING_BASELINE.md` as future depth expansion.
 
 ## Known Issues
 

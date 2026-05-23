@@ -16,16 +16,16 @@ function Header([string]$text) {
     Write-Host $text -ForegroundColor Cyan
 }
 
-function Item([string]$text) {
+function Bullet([string]$text) {
     Write-Host "- $text"
 }
 
 function ShowEnginePlan([string]$name, [string]$baseline, [string]$lowPath, [string]$highPath, [string[]]$steps) {
     Header "[$name]"
-    Item "Baseline doc: $baseline"
-    Item "Low-pressure screenshot: $lowPath"
-    Item "High-pressure screenshot: $highPath"
-    Item "Capture steps:"
+    Bullet "Baseline doc: $baseline"
+    Bullet "Low-pressure screenshot: $lowPath"
+    Bullet "High-pressure screenshot: $highPath"
+    Bullet "Capture steps:"
     foreach ($step in $steps) {
         Write-Host "  * $step"
     }
@@ -39,8 +39,8 @@ function ShowEnginePlan([string]$name, [string]$baseline, [string]$lowPath, [str
 }
 
 Header "Profiling Capture Sprint"
-Item "Repository root: $repoRoot"
-Item "Goal: remove all Pending values and add six screenshots"
+Bullet "Repository root: $repoRoot"
+Bullet "Goal: remove all Pending values and add six screenshots"
 
 $selected = @()
 if ($Engine -eq "all") {
@@ -79,9 +79,9 @@ foreach ($target in $selected) {
 }
 
 Header "Finish"
-Item "Update all three baseline docs"
-Item "Run: ./scripts/check-profiling-readiness.ps1"
-Item "Run: ./scripts/run-portfolio-preflight.ps1"
+Bullet "Update all three baseline docs"
+Bullet "Run: ./scripts/check-profiling-readiness.ps1"
+Bullet "Run: ./scripts/run-portfolio-preflight.ps1"
 
 if ($RunGate) {
     Write-Host ""

@@ -6,22 +6,22 @@ Last updated: 2026-05-22
 
 - Phase 0: Completed
 - Phase 1: Completed
-- Phase 2 (Godot flagship): In progress, production-ready slice achieved
+- Phase 2 (Godot flagship): Completed production-ready slice
 - Phase 2 (Defold): Completed advanced slice with offline-first leaderboard sync
-- Phase 2 (Solar2D): In progress, playable vertical-slice baseline implemented
-- Phase 2 (Panda3D): In progress, playable vertical-slice baseline implemented
-- Phase 2 (Stride): In progress, baseline simulation slice implemented
-- Phase 3+: Not started
+- Phase 2 (Solar2D): Completed playable vertical-slice baseline
+- Phase 2 (Panda3D): Completed playable vertical-slice baseline
+- Phase 2 (Stride): Completed baseline simulation slice
+- Phase 3+: In progress (portfolio hardening and evidence enrichment)
 
 ## Engine Status
 
 | Engine | Status | Notes |
 | --- | --- | --- |
-| Godot | Production hardening in progress | Core systems, dynamic pressure director, deterministic seed mode, and replay trace export are in place; profiler capture and public GitHub release still pending |
-| Defold | Advanced slice complete | Gameplay now includes leaderboard cache + offline sync queue hooks; docs, acceptance tests, profiling template, and release scripts are in place; profiling capture and public release publication pending |
-| Solar2D | Vertical slice in progress | Core playable loop and portfolio docs implemented; profiling capture and release packaging pending |
-| Panda3D | Vertical slice in progress | Playable lane-dodge baseline implemented with deterministic seed + trace export; profiling capture and release publication pending |
-| Stride | Baseline in progress | C# Stride-oriented simulation baseline implemented with deterministic seed + trace export; profiling capture and release publication pending |
+| Godot | Production-ready slice shipped | Core systems, dynamic pressure director, deterministic seed mode, replay trace export, profiling evidence, and tagged release are in place |
+| Defold | Advanced slice shipped | Gameplay includes leaderboard cache + offline sync queue hooks; docs, acceptance tests, profiling evidence, and tagged release are in place |
+| Solar2D | Vertical slice shipped | Core playable loop and portfolio docs implemented; profiling evidence and tagged release are in place |
+| Panda3D | Vertical slice shipped | Playable lane-dodge baseline implemented with deterministic seed + trace export, profiling evidence, and tagged release in place |
+| Stride | Baseline slice shipped | C# simulation baseline with deterministic seed + trace export, profiling evidence, and tagged release in place |
 
 ## Current Readiness Summary
 
@@ -34,4 +34,5 @@ Last updated: 2026-05-22
 - Release-note templates and API-based release publishing script are in place.
 - Profiling evidence index and readiness gate script are in place.
 - Professional profile packet maps concise summaries to verifiable repo evidence.
-- Final blockers across engines: profiler data capture and tagged public GitHub releases.
+- Submission blocker status: no hard blockers in repository gates.
+- Remaining quality uplift: replace provisional gameplay clips with richer captures and expand Panda3D/Stride depth.

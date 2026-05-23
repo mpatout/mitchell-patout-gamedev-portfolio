@@ -15,7 +15,7 @@ Production-hardening update that adds reproducible debugging support and adaptiv
 ## Performance Notes
 
 - Entity counts remain capped by level and are still draw-light (primitive rendering only).
-- Runtime profiling capture is pending on a machine with Godot profiler tooling available.
+- Runtime profiling capture is complete; see docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ## Known Issues
 

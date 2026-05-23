@@ -14,7 +14,7 @@ Initial production baseline release for the Defold engine slice.
 ## Performance Notes
 
 - GUI-node count remains small and bounded.
-- Runtime profiling capture is pending on a machine with Defold profiler tooling available.
+- At this release milestone, runtime profiling capture was pending; current profiling evidence is available in docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ## Known Issues
 

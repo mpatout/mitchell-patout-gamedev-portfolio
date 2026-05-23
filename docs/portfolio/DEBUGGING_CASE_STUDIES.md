@@ -33,7 +33,7 @@ powerup cadence remains within expected bounds.
 
 - Deterministic trace capture confirmed.
 - Pressure events and hit recovery events are present in telemetry.
-- Runtime profiling capture remains pending on a machine with Godot profiler tooling.
+- Runtime profiling capture is completed and indexed in docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ### Follow-up
 
@@ -66,4 +66,4 @@ using a fixed RNG seed.
 
 - Deterministic trace capture is implemented in the runtime.
 - Summary tooling is available for release/debug evidence.
-- Profiling screenshot capture remains pending.
+- Profiling screenshot capture is completed and indexed in docs/portfolio/PROFILING_EVIDENCE_INDEX.md.

@@ -31,13 +31,14 @@ A project is considered portfolio-ready when all required artifacts exist, quick
 ## Current Evidence Snapshot
 
 - Godot: runnable, documented, acceptance-tested, deterministic seed + replay trace instrumentation.
-- Defold: runnable, documented, acceptance-tested, release scripts and quality gate present.
-- Solar2D: runnable vertical slice, documented, acceptance-tested, release scripts and quality gate present.
+- Defold: runnable, documented, acceptance-tested, offline-first leaderboard cache/sync workflow, release scripts, and quality gate present.
+- Solar2D: runnable vertical slice, documented, acceptance-tested, release scripts, and quality gate present.
+- Panda3D: runnable lane-dodge baseline with deterministic seed + trace export, documented, acceptance-tested, release scripts, and quality gate present.
+- Stride: runnable C# simulation baseline with deterministic seed + trace export, documented, acceptance-tested, release scripts, and quality gate present.
 - Debugging workflow: reproducible case-study path documented in `docs/portfolio/DEBUGGING_CASE_STUDIES.md`.
-- Panda3D/Stride: planned only; no runnable implementation yet.
 
 ## Remaining Gaps For Reviewer Confidence
 
-- Capture and commit real profiling data/screenshots for all active engines.
-- Publish tagged GitHub releases with downloadable source artifacts and notes.
+- Gameplay clips currently satisfy the repository gate, but should be replaced with richer production captures for external sharing.
+- Expand Panda3D and Stride from baseline slices into advanced slices to match Godot/Defold depth.
 - Add one public debugging case study issue/PR showing repro -> fix workflow.

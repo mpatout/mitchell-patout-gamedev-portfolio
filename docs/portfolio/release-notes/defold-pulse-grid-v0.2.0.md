@@ -15,7 +15,7 @@ Advanced Defold milestone release focused on leaderboard depth and offline relia
 ## Performance Notes
 
 - Queue cap keeps save payload growth bounded during long sessions.
-- Runtime profiling capture is still pending on a machine with Defold profiler tooling available.
+- Runtime profiling capture is complete; see docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ## Known Issues
 

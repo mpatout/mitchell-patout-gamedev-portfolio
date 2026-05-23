@@ -15,7 +15,7 @@ Deterministic debugging and telemetry instrumentation update for Spark Catch.
 ## Performance Notes
 
 - Gameplay update is logic instrumentation only; object counts and draw approach are unchanged.
-- Runtime profiling capture remains pending in profiling baseline workflow.
+- Runtime profiling capture is complete; see docs/portfolio/PROFILING_EVIDENCE_INDEX.md.
 
 ## Known Issues
 

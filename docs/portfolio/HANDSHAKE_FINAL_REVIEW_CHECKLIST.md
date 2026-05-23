@@ -10,6 +10,8 @@ Run this checklist right before submitting the Handshake form.
   - `godot-signal-chase-v0.3.2`
   - `defold-pulse-grid-v0.2.0`
   - `solar2d-spark-catch-v0.2.1`
+  - `panda3d-lane-drift-v0.1.0`
+  - `stride-lane-surge-v0.1.0`
 
 ## 2) Evidence Coverage (Role Prompt Mapping)
 
@@ -33,6 +35,20 @@ Run this checklist right before submitting the Handshake form.
 - [ ] Architecture and debugging evidence present: `engines/solar2d/TECHNICAL_PACKET.md`
 - [ ] Acceptance tests present: `engines/solar2d/ACCEPTANCE_TEST.md`
 - [ ] Performance baseline completed: `engines/solar2d/PROFILING_BASELINE.md`
+
+### Panda3D Experience Prompt
+
+- [ ] Panda3D project quickstart works: `engines/panda3d/README.md`
+- [ ] Architecture and debugging evidence present: `engines/panda3d/TECHNICAL_PACKET.md`
+- [ ] Acceptance tests present: `engines/panda3d/ACCEPTANCE_TEST.md`
+- [ ] Performance baseline completed: `engines/panda3d/PROFILING_BASELINE.md`
+
+### Stride Experience Prompt
+
+- [ ] Stride project quickstart works: `engines/stride/README.md`
+- [ ] Architecture and debugging evidence present: `engines/stride/TECHNICAL_PACKET.md`
+- [ ] Acceptance tests present: `engines/stride/ACCEPTANCE_TEST.md`
+- [ ] Performance baseline completed: `engines/stride/PROFILING_BASELINE.md`
 
 ### Portfolio Link Prompt
 

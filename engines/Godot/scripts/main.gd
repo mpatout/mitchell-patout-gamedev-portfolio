@@ -36,6 +36,9 @@ const PRESSURE_DECAY_PER_SECOND := 0.06
 const PRESSURE_STASIS_RELIEF_PER_SECOND := 0.14
 const POWERUP_INTERVAL_MIN := 8.5
 const POWERUP_INTERVAL_MAX := 16.5
+const AUDIO_BUS_NAME := "Master"
+const MUSIC_VOLUME_DB := -20.0
+const SFX_VOLUME_DB := -8.0
 
 @onready var score_label: Label = $HUD/Overlay/ScoreLabel
 @onready var timer_label: Label = $HUD/Overlay/TimerLabel
@@ -72,12 +75,67 @@ var run_elapsed := 0.0
 var input_sample_timer := 0.0
 var run_trace_events: Array[Dictionary] = []
 var pressure_level := BASE_PRESSURE
+var audio_muted := false
+var music_player: AudioStreamPlayer
+var sfx_players: Dictionary = {}
 
 
 func _ready() -> void:
+	_setup_audio()
 	_configure_seed_mode()
 	_load_best_score()
 	_restart_round(false)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == Key.M:
+		_toggle_audio_mute()
+
+
+func _setup_audio() -> void:
+	music_player = AudioStreamPlayer.new()
+	music_player.bus = AUDIO_BUS_NAME
+	music_player.volume_db = MUSIC_VOLUME_DB
+	add_child(music_player)
+
+	if ResourceLoader.exists("res://audio/music_loop.wav"):
+		music_player.stream = load("res://audio/music_loop.wav")
+		music_player.play()
+
+	_register_sfx("catch", "res://audio/catch.wav", SFX_VOLUME_DB)
+	_register_sfx("hit", "res://audio/hit.wav", SFX_VOLUME_DB - 1.5)
+	_register_sfx("powerup", "res://audio/powerup.wav", SFX_VOLUME_DB - 2.0)
+	_register_sfx("round_end", "res://audio/round_end.wav", SFX_VOLUME_DB - 1.0)
+
+
+func _register_sfx(name: String, path: String, volume_db: float) -> void:
+	if not ResourceLoader.exists(path):
+		return
+
+	var player := AudioStreamPlayer.new()
+	player.bus = AUDIO_BUS_NAME
+	player.volume_db = volume_db
+	player.stream = load(path)
+	add_child(player)
+	sfx_players[name] = player
+
+
+func _play_sfx(name: String, pitch_scale: float = 1.0) -> void:
+	if not sfx_players.has(name):
+		return
+
+	var player: AudioStreamPlayer = sfx_players[name]
+	player.pitch_scale = pitch_scale
+	player.play()
+
+
+func _toggle_audio_mute() -> void:
+	audio_muted = not audio_muted
+	var bus_index := AudioServer.get_bus_index(AUDIO_BUS_NAME)
+	if bus_index >= 0:
+		AudioServer.set_bus_mute(bus_index, audio_muted)
+
+	state_label.text = "Audio muted (M to unmute)." if audio_muted else "Audio enabled (M to mute)."
 
 
 func _process(delta: float) -> void:
@@ -295,6 +353,8 @@ func _collect_target() -> void:
 		best_score = score
 		_save_best_score()
 
+	_play_sfx("catch", 1.0 + min(float(combo_count), 6.0) * 0.03)
+
 	_log_run_event("target_collected", {
 		"score": score,
 		"combo": combo_count,
@@ -401,6 +461,7 @@ func _apply_hit(message: String) -> void:
 	combo_count = 0
 	combo_timer = 0.0
 	pressure_level = max(0.0, pressure_level - PRESSURE_HIT_PENALTY)
+	_play_sfx("hit")
 	_log_run_event("player_hit", {
 		"reason": message,
 		"lives": max(lives, 0),
@@ -415,6 +476,7 @@ func _apply_hit(message: String) -> void:
 func _spawn_powerup() -> void:
 	powerup_active = true
 	powerup_position = _get_safe_spawn_point(120.0)
+	_play_sfx("powerup", 0.95)
 	_log_run_event("powerup_spawned", {
 		"x": snapped(powerup_position.x, 0.01),
 		"y": snapped(powerup_position.y, 0.01),
@@ -426,6 +488,7 @@ func _spawn_powerup() -> void:
 func _end_round(message: String) -> void:
 	state = GameState.ROUND_OVER
 	_pause_label_visibility(false)
+	_play_sfx("round_end", 0.92)
 	_log_run_event("round_end", {
 		"reason": message,
 		"score": score,

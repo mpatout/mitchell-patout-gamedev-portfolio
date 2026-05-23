@@ -67,7 +67,7 @@ engines/solar2d/
 
 ## Known Limitations
 
-- No audio feedback yet.
+- Audio layer is intentionally lightweight (single loop + event SFX) with no device-specific mixing profile.
 - No object pooling; objects are created/removed directly for simplicity.
 - Native mobile build/export must be done manually in Solar2D tooling.
 - Trace payload is event-sampled and not frame-accurate replay state.

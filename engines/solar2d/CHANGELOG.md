@@ -1,5 +1,12 @@
 ﻿# Changelog
 
+## [Unreleased] - 2026-05-22
+
+### Added
+
+- Lightweight audio layer with looped ambience and gameplay SFX loaded from `audio/`.
+- Runtime mute toggle on `M` key and prompt-level audio status messaging.
+
 ## [0.2.1] - 2026-05-22
 
 ### Added

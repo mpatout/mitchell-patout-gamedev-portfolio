@@ -124,7 +124,7 @@ end
 
 ## Known Limitations
 
-- No audio. Defold sound sources require `.wav`/`.ogg` assets.
+- Audio layer is intentionally lightweight (single master group + event SFX + looped ambience), with no spatial mixing.
 - No export preset automation. HTML5/mobile export requires Defold Editor.
 - `sys.get_save_file` on HTML5 resolves to emscripten FS; data persists only
   within browser origin.

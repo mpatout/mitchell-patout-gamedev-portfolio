@@ -1,6 +1,7 @@
 display.setStatusBar(display.HiddenStatusBar)
 
 local json = require("json")
+local audio = require("audio")
 
 math.randomseed(os.time())
 
@@ -42,6 +43,10 @@ local seedLocked = false
 local seedBase = os.time()
 local runIndex = 0
 local currentRunSeed = 0
+local audioMuted = false
+local sfx = {}
+local musicStream = nil
+local musicChannel = nil
 
 local savePath = system.pathForFile("spark_catch_save.json", system.DocumentsDirectory)
 local tracePath = system.pathForFile(TRACE_FILE_NAME, system.DocumentsDirectory)
@@ -204,6 +209,63 @@ local function saveBestScore()
   io.close(file)
 end
 
+local function audioStatusLine()
+  if audioMuted then
+    return "Audio off (M to toggle)"
+  end
+  return "Audio on (M to toggle)"
+end
+
+local function loadAudio()
+  sfx.catch = audio.loadSound("audio/catch.wav")
+  sfx.hit = audio.loadSound("audio/hit.wav")
+  sfx.powerup = audio.loadSound("audio/powerup.wav")
+  sfx.round_end = audio.loadSound("audio/round_end.wav")
+  musicStream = audio.loadStream("audio/music_loop.wav")
+end
+
+local function startMusic()
+  if not musicStream or audioMuted then
+    return
+  end
+  if musicChannel then
+    return
+  end
+  musicChannel = audio.play(musicStream, { loops = -1, channel = 1 })
+  if musicChannel then
+    audio.setVolume(0.24, { channel = musicChannel })
+  end
+end
+
+local function stopMusic()
+  if musicChannel then
+    audio.stop(musicChannel)
+    musicChannel = nil
+  end
+end
+
+local function playSfx(name, volume)
+  if audioMuted then
+    return
+  end
+  if not sfx[name] then
+    return
+  end
+  local channel = audio.play(sfx[name])
+  if channel and volume then
+    audio.setVolume(volume, { channel = channel })
+  end
+end
+
+local function setAudioMuted(muted)
+  audioMuted = muted
+  if audioMuted then
+    stopMusic()
+  else
+    startMusic()
+  end
+end
+
 bestScore = loadBestScore()
 
 local function updateHud()
@@ -236,7 +298,12 @@ end
 
 local function setPrompt(prompt, detail)
   promptText.text = prompt
-  detailText.text = detail or ""
+  local suffix = audioStatusLine()
+  if detail and detail ~= "" then
+    detailText.text = detail .. "\n" .. suffix
+  else
+    detailText.text = suffix
+  end
   promptText.isVisible = true
   detailText.isVisible = true
 end
@@ -265,6 +332,8 @@ end
 
 local function endRound()
   state = "round_over"
+  stopMusic()
+  playSfx("round_end", 0.65)
   if score > bestScore then
     bestScore = score
     saveBestScore()
@@ -289,6 +358,7 @@ local function applySparkCatch()
 
   score = score + (bonus * multiplier)
   combo = combo + 1
+  playSfx("catch", 0.55)
   logTrace("spark_catch", {
     score = score,
     combo = combo,
@@ -299,6 +369,7 @@ end
 local function applyShardCatch()
   combo = 0
   lives = lives - 1
+  playSfx("hit", 0.62)
   logTrace("shard_catch", {
     lives = lives
   })
@@ -308,6 +379,7 @@ local function applyOverchargeCatch()
   combo = 0
   overchargeTimer = OVERCHARGE_DURATION
   score = score + 2
+  playSfx("powerup", 0.58)
   logTrace("overcharge_catch", {
     score = score,
     duration = OVERCHARGE_DURATION
@@ -363,6 +435,8 @@ end
 local function startRound()
   prepareRoundSeed()
   resetRoundState()
+  startMusic()
+  playSfx("powerup", 0.46)
   state = "playing"
   logTrace("round_start", {
     seed = currentRunSeed,
@@ -425,6 +499,18 @@ local function onKey(event)
       setPaused(true)
     elseif state == "paused" then
       setPaused(false)
+    end
+    return true
+  end
+
+  if event.keyName == "m" then
+    setAudioMuted(not audioMuted)
+    if state == "title" then
+      setPrompt("Tap to Start", "Drag the catcher. Catch sparks. Avoid shards.")
+    elseif state == "round_over" then
+      setPrompt("Round Complete", "Tap to restart")
+    elseif state == "paused" then
+      setPrompt("Paused", "Press P to resume")
     end
     return true
   end
@@ -530,5 +616,7 @@ Runtime:addEventListener("key", onKey)
 Runtime:addEventListener("enterFrame", updateFrame)
 
 configureSeedMode()
+loadAudio()
+setAudioMuted(false)
 setPrompt("Tap to Start", "Drag the catcher. Catch sparks. Avoid shards.")
 updateHud()

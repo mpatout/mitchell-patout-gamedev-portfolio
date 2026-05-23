@@ -1,5 +1,12 @@
 ﻿# Changelog
 
+## [Unreleased]
+
+### Added
+
+- Lightweight audio layer with looped ambience plus gameplay SFX (`catch`, `hit`, `powerup`, `round_end`).
+- Runtime audio mute toggle on `M` key.
+
 ## [0.3.2] - 2026-05-22
 
 ### Added

@@ -29,6 +29,7 @@ Defold **1.9.0** (tested on 1.9.4).
 | **Click / Tap** active cell | Score a hit |
 | **Enter** | Start round / restart after game-over |
 | **Esc** | Pause / resume |
+| **M** | Toggle audio mute |
 
 ## Core Systems
 
@@ -65,7 +66,6 @@ See [PROFILING_BASELINE.md](PROFILING_BASELINE.md).
 
 ## Known Limitations
 
-- No audio (Defold sound component not wired up; no audio assets).
 - HTML5 build requires Defold Editor to export; not scripted here.
 - Save path (`sys.get_save_file`) is platform-resolved; works on desktop and
   mobile, varies on HTML5 (browser local storage via emscripten).

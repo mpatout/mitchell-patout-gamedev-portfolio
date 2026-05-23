@@ -1,5 +1,13 @@
 ﻿# CHANGELOG — Defold: Pulse Grid
 
+## [Unreleased] — 2026-05-22
+
+### Added
+
+- Lightweight audio stack with event SFX and looped ambience (`main/audio/*.wav`).
+- Sound components wired to game object (`sfx_catch`, `sfx_hit`, `sfx_powerup`, `sfx_round_end`, `music_loop`).
+- Audio mute toggle on `M` key.
+
 ## [0.2.0] — 2026-05-22
 
 ### Added

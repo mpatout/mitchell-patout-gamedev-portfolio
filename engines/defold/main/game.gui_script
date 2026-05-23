@@ -63,6 +63,8 @@ local pulse_timer
 local leaderboard
 local pending_scores
 local sync_status
+local audio_status
+local audio_muted
 local show_overlay
 
 -- ---------------------------------------------------------------------------
@@ -221,6 +223,22 @@ local function update_hud()
   end
 end
 
+local function set_audio_muted(muted)
+  audio_muted = muted
+  if muted then
+    sound.set_group_gain(hash("master"), 0)
+    audio_status = "Audio: muted (M to unmute)"
+  else
+    sound.set_group_gain(hash("master"), 1)
+    audio_status = "Audio: on (M to mute)"
+  end
+end
+
+local function play_sfx(component)
+  if audio_muted then return end
+  msg.post(component, "play_sound")
+end
+
 -- ---------------------------------------------------------------------------
 -- Cell management
 -- ---------------------------------------------------------------------------
@@ -274,6 +292,7 @@ end
 -- Scoring events
 -- ---------------------------------------------------------------------------
 local function on_hit(idx)
+  play_sfx("#sfx_catch")
   deactivate_cell(idx)
   combo        = combo + 1
   combo_timer  = COMBO_WINDOW
@@ -292,6 +311,7 @@ local function on_hit(idx)
 end
 
 local function on_miss(idx)
+  play_sfx("#sfx_hit")
   active_cells[idx] = nil
   -- Flash red → idle
   gui.cancel_animation(cell_node(idx), gui.PROP_COLOR)
@@ -310,6 +330,7 @@ local function on_miss(idx)
     enqueue_pending_score(score)
     try_remote_sync()
     save_best()
+    play_sfx("#sfx_round_end")
     show_overlay("GAME OVER\nScore: " .. score .. "   Best: " .. best_score
       .. "\nEnter = restart   Esc = quit")
   end
@@ -324,6 +345,7 @@ show_overlay = function(text)
     "",
     leaderboard_summary(),
     sync_status or "",
+    audio_status or "",
   }
   gui.set_text(gui.get_node("state_label"), table.concat(lines, "\n"))
   gui.set_enabled(gui.get_node("overlay"), true)
@@ -341,6 +363,7 @@ local function start_round()
   pulse_timer    = pulse_interval
   reset_all_cells()
   state = STATE.PLAYING
+  play_sfx("#sfx_powerup")
   gui.set_enabled(gui.get_node("overlay"), false)
   update_hud()
 end
@@ -351,6 +374,8 @@ end
 function init(self)
   math.randomseed(os.time())
   msg.post(".", "acquire_input_focus")
+  set_audio_muted(false)
+  msg.post("#music_loop", "play_sound")
   load_best()
   try_remote_sync()
   score       = 0
@@ -377,6 +402,7 @@ function update(self, dt)
     enqueue_pending_score(score)
     try_remote_sync()
     save_best()
+    play_sfx("#sfx_round_end")
     show_overlay("TIME UP!\nScore: " .. score .. "   Best: " .. best_score
       .. "\nEnter = restart")
     update_hud()
@@ -436,6 +462,19 @@ function on_input(self, action_id, action)
       gui.set_enabled(gui.get_node("overlay"), false)
       return true
     end
+  end
+
+  if action_id == hash("key_m") and action.pressed then
+    set_audio_muted(not audio_muted)
+    if state == STATE.TITLE then
+      show_overlay("PULSE GRID\nClick each cell before it fades!\nPress Enter to start")
+    elseif state == STATE.GAME_OVER then
+      show_overlay("GAME OVER\nScore: " .. score .. "   Best: " .. best_score
+        .. "\nEnter = restart   Esc = quit")
+    elseif state == STATE.PAUSED then
+      show_overlay("PAUSED\nPress Esc to resume")
+    end
+    return true
   end
 
   -- Mouse left-click or touch: check each active cell

@@ -39,6 +39,7 @@ $env:SIGNAL_CHASE_SEED="424242"; godot4 --path engines/Godot
 - Move: Arrow keys or WASD
 - Restart after round: Enter (`ui_accept`)
 - Pause or resume: Esc (`ui_cancel`)
+- Toggle audio mute: M
 
 ## Core Systems
 
@@ -78,7 +79,6 @@ Run and record pre-release checks in [ACCEPTANCE_TEST.md](ACCEPTANCE_TEST.md).
 
 ## Known Limitations
 
-- No audio layer yet
 - No exported binaries yet (editor/CLI run supported)
 - Single gameplay mode currently; secondary modes pending
 

@@ -6,6 +6,10 @@ key_trigger {
   input: KEY_ESCAPE
   action: "key_escape"
 }
+key_trigger {
+  input: KEY_M
+  action: "key_m"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "mouse_button_left"

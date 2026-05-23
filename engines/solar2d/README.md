@@ -33,6 +33,7 @@ $env:SPARK_CATCH_SEED="424242"
 | Drag player bar | Move catcher horizontally |
 | Tap title / round-over prompt | Start or restart round |
 | `P` key | Pause / resume |
+| `M` key | Toggle audio mute |
 
 ## Core Systems
 
@@ -49,7 +50,7 @@ $env:SPARK_CATCH_SEED="424242"
 - Table-backed object pool style lifecycle with explicit cleanup on despawn.
 - Save data persistence through `system.DocumentsDirectory` JSON file.
 - Replay/debug telemetry trace with seed and event stream.
-- No external art/audio dependencies; all primitives are generated at runtime.
+- Runtime visuals are primitive-generated; audio is locally synthesized and loaded from `/audio`.
 
 ## Performance Snapshot
 
@@ -67,6 +68,5 @@ Run and record checks in [ACCEPTANCE_TEST.md](ACCEPTANCE_TEST.md).
 
 ## Known Limitations
 
-- No audio layer yet.
 - Keyboard controls are development-only; mobile primary control is drag.
 - Export to native mobile binaries is not scripted in this repo.

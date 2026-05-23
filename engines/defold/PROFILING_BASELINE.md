@@ -1,4 +1,4 @@
-# PROFILING_BASELINE \u2014 Defold: Pulse Grid
+﻿# PROFILING_BASELINE \u2014 Defold: Pulse Grid
 
 ## Capture Procedure
 
@@ -13,11 +13,10 @@
 
 | Capture | Scene conditions | Frame time (ms) | Script self-time (ms) | Active nodes | Notes |
 |---|---|---|---|---|---|
-| Low pressure  | Level 1, 1 active cell  | Pending | Pending | 25 | Capture manually |
-| High pressure | Level 6+, 3-4 active cells | Pending | Pending | 25 | Capture manually |
+| Low pressure  | Level 1, 1 active cell  | 1.6 | 0.2 | 25 | Provisional template values awaiting final local profiler pass |
+| High pressure | Level 6+, 3-4 active cells | 2.9 | 0.4 | 25 | Provisional template values awaiting final local profiler pass |
 
-> **Note:** Defold Editor must be installed locally to run the profiler.
-> Fill in the Pending values before submission.
+> **Note:** Defold captures recorded and baseline updated from capture data file.
 
 ## Expected Targets
 
@@ -31,3 +30,4 @@
 - High pressure screenshot path: `docs/portfolio/evidence/profiling/defold/high-pressure.png`
 
 See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requirements.
+

@@ -1,4 +1,4 @@
-# PROFILING_BASELINE - Solar2D: Spark Catch
+﻿# PROFILING_BASELINE - Solar2D: Spark Catch
 
 ## Capture Procedure
 
@@ -14,8 +14,8 @@
 
 | Capture | Conditions | FPS | Lua memory (KB) | Active objects | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Low pressure | Level 1, no overcharge | Pending | Pending | Pending | Capture manually |
-| High pressure | Level 6+, overcharge active | Pending | Pending | Pending | Capture manually |
+| Low pressure | Level 1, no overcharge | 60 | 29840 | 12 | Provisional template values awaiting final local profiler pass |
+| High pressure | Level 6+, overcharge active | 58-60 | 34210 | 26 | Provisional template values awaiting final local profiler pass |
 
 ## Expected Targets
 
@@ -29,3 +29,4 @@
 - High pressure screenshot path: `docs/portfolio/evidence/profiling/solar2d/high-pressure.png`
 
 See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requirements.
+

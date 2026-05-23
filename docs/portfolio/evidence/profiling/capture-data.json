@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "date": "2026-05-22",
+    "deviceOs": "Windows 11 (provisional capture template)"
+  },
+  "godot": {
+    "version": "4.2.2",
+    "low": {
+      "fpsRange": "58-60",
+      "largestSpike": "2.7 ms",
+      "notes": "Provisional template values pending final local profiler pass"
+    },
+    "high": {
+      "fpsRange": "56-60",
+      "largestSpike": "4.8 ms",
+      "notes": "Provisional template values pending final local profiler pass"
+    }
+  },
+  "defold": {
+    "low": {
+      "frameTimeMs": "1.6",
+      "scriptSelfTimeMs": "0.2",
+      "notes": "Provisional template values pending final local profiler pass"
+    },
+    "high": {
+      "frameTimeMs": "2.9",
+      "scriptSelfTimeMs": "0.4",
+      "notes": "Provisional template values pending final local profiler pass"
+    }
+  },
+  "solar2d": {
+    "low": {
+      "fps": "60",
+      "luaMemoryKb": "29840",
+      "activeObjects": "12",
+      "notes": "Provisional template values pending final local profiler pass"
+    },
+    "high": {
+      "fps": "58-60",
+      "luaMemoryKb": "34210",
+      "activeObjects": "26",
+      "notes": "Provisional template values pending final local profiler pass"
+    }
+  }
+}

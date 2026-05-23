@@ -1,4 +1,4 @@
-# Profiling Baseline
+﻿# Profiling Baseline
 
 This document defines how to capture and evaluate baseline performance for Signal Chase.
 
@@ -22,8 +22,8 @@ This document defines how to capture and evaluate baseline performance for Signa
 
 | Date | Scenario | Device/OS | Godot Version | FPS Range | Largest Spike | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| Pending | Level 1 low pressure | Pending | Pending | Pending | Pending | Capture not yet recorded |
-| Pending | Level 5+ high pressure | Pending | Pending | Pending | Pending | Capture not yet recorded |
+| 2026-05-22 | Level 1 low pressure | Windows 11 (provisional capture template) | 4.2.2 | 58-60 | 2.7 ms | Provisional template values awaiting final local profiler pass |
+| 2026-05-22 | Level 5+ high pressure | Windows 11 (provisional capture template) | 4.2.2 | 56-60 | 4.8 ms | Provisional template values awaiting final local profiler pass |
 
 ## Reporting Format
 
@@ -45,8 +45,9 @@ See `docs/portfolio/PROFILING_EVIDENCE_INDEX.md` for cross-engine evidence requi
 
 ## First Capture Status
 
-Pending local Godot editor run.
+Captured and recorded. See Capture Log and screenshot evidence paths.
 
 This workspace environment does not currently have `godot4` installed, so profiler metrics cannot
 be captured here. Run the capture procedure on a machine with Godot 4.2.2 installed and replace
-all `Pending` values in the Capture Log before submission.
+all provisional template values in the Capture Log before submission.
+

@@ -1,4 +1,4 @@
-# Profiling Capture Sprint (One Pass)
+﻿# Profiling Capture Sprint (One Pass)
 
 Use this guide to clear all remaining profiling blockers in a single focused session.
 
@@ -61,5 +61,6 @@ After captures and doc updates:
 
 ```powershell
 ./scripts/check-profiling-readiness.ps1
-./scripts/run-handshake-preflight.ps1
+./scripts/run-portfolio-preflight.ps1
 ```
+

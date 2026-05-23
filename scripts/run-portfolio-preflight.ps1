@@ -1,5 +1,4 @@
 param(
-    [switch]$RequireGameplayMedia,
     [switch]$SkipGameplayMedia
 )
 
@@ -96,9 +95,9 @@ if (-not $SkipGameplayMedia) {
 
 Write-Host ""
 if ($failed) {
-    Write-Host "Handshake preflight FAILED" -ForegroundColor Red
+    Write-Host "Portfolio preflight FAILED" -ForegroundColor Red
     exit 1
 }
 
-Write-Host "Handshake preflight PASSED" -ForegroundColor Green
+Write-Host "Portfolio preflight PASSED" -ForegroundColor Green
 exit 0

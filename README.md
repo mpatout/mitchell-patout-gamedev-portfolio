@@ -1,4 +1,4 @@
-# Game Development Specialist Portfolio
+﻿# Game Development Portfolio
 
 This repository demonstrates production-oriented game development across five engines:
 
@@ -31,9 +31,9 @@ It is designed for recruiter and reviewer efficiency:
 6. Review debugging evidence: `docs/portfolio/DEBUGGING_CASE_STUDIES.md`
 7. Review profiling evidence index: `docs/portfolio/PROFILING_EVIDENCE_INDEX.md`
 8. Review gameplay evidence index: `docs/portfolio/GAMEPLAY_EVIDENCE_INDEX.md`
-9. Use application packet: `docs/portfolio/HANDSHAKE_APPLICATION_PACKET.md`
-10. Run final submission preflight: `scripts/run-handshake-preflight.ps1`
-11. Use form response bank: `docs/portfolio/HANDSHAKE_FORM_RESPONSE_BANK.md`
+9. Review professional profile packet: `docs/portfolio/PROFESSIONAL_PROFILE_PACKET.md`
+10. Run portfolio preflight: `scripts/run-portfolio-preflight.ps1`
+11. Review summary snippets: `docs/portfolio/PROFESSIONAL_SUMMARY_BANK.md`
 
 To execute profiling capture in one pass:
 
@@ -66,7 +66,7 @@ Deterministic replay trace analysis for Godot is supported by `engines/Godot/scr
 ## Repository Layout
 
 - `engines/` - Engine-specific demos and supporting docs
-- `docs/portfolio/` - Hiring-facing matrix and release checklists
+- `docs/portfolio/` - Portfolio matrix, evidence guides, and release checklists
 - `docs/standards/` - Portfolio standards and governance
 - `.github/` - Templates and CI workflows
 - `scripts/` - Validation scripts used by CI
@@ -108,12 +108,13 @@ $env:GITHUB_TOKEN="<token>"
 ./scripts/publish-github-releases.ps1 -Repository "mpatout/mitchell-patout-gamedev-portfolio"
 ```
 
-Before form submission, run:
+Before final portfolio handoff, run:
 
 ```powershell
-./scripts/run-handshake-preflight.ps1
+./scripts/run-portfolio-preflight.ps1
 ```
 
 ## License
 
 Code and original assets are repository-specific. Third-party assets must be documented in each project's `ASSET_PROVENANCE.md`.
+

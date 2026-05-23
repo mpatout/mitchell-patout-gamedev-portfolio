@@ -33,5 +33,5 @@ Last updated: 2026-05-22
 - Stride now has a runnable C# baseline (`Lane Surge`) with deterministic seed and trace output.
 - Release-note templates and API-based release publishing script are in place.
 - Profiling evidence index and readiness gate script are in place.
-- Handshake application packet maps form responses to verifiable repo evidence.
+- Professional profile packet maps concise summaries to verifiable repo evidence.
 - Final blockers across engines: profiler data capture and tagged public GitHub releases.

@@ -1,4 +1,4 @@
-param(
+﻿param(
     [ValidateSet("all", "godot", "defold", "solar2d")]
     [string]$Engine = "all",
     [switch]$OpenPaths,
@@ -81,10 +81,11 @@ foreach ($target in $selected) {
 Header "Finish"
 Item "Update all three baseline docs"
 Item "Run: ./scripts/check-profiling-readiness.ps1"
-Item "Run: ./scripts/run-handshake-preflight.ps1"
+Item "Run: ./scripts/run-portfolio-preflight.ps1"
 
 if ($RunGate) {
     Write-Host ""
     Write-Host "Running profiling readiness gate..." -ForegroundColor Yellow
     ./scripts/check-profiling-readiness.ps1
 }
+
